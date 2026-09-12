@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toy Dəvətnaməsi — Nizami & Lətifə</title>
+    <!-- Modern & Estetik Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f7f4ef;       /* Bej fon */
+            --card-bg: #ffffff;
+            --envelope-bg: #eae3d2;   /* Bej zərf */
+            --gold-primary: #c5a059;  /* Mat Qızılı */
+            --gold-hover: #b08b46;
+            --text-dark: #333333;
+            --text-muted: #777777;
+            --border-color: #e8e2d5;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ZƏRF VƏ MÖHÜR EKRANI */
+        #envelope-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease, visibility 0.8s;
+        }
+
+        .envelope {
+            width: 300px;
+            height: 210px;
+            background-color: var(--envelope-bg);
+            border-radius: 6px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.06);
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .seal-btn {
+            width: 75px;
+            height: 75px;
+            background: linear-gradient(135deg, #d4af37 0%, #aa7c11 100%);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ffffff;
+            font-size: 20px;
+            box-shadow: 0 6px 15px rgba(197, 160, 89, 0.4);
+            cursor: pointer;
+            border: 2px solid #ffffff;
+            transition: transform 0.3s ease;
+        }
+
+        .seal-btn:hover {
+            transform: scale(1.08);
+        }
+
+        .tap-text {
+            margin-top: 25px;
+            font-size: 13px;
+            color: var(--gold-primary);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 500;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+
+        /* ƏSAS DƏVƏTNAMƏ KARTOCASI */
+        #main-card {
+            display: none;
+            width: 100%;
+            max-width: 520px;
+            background: var(--card-bg);
+            padding: 45px 30px;
+            margin: 20px;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.04);
+            text-align: center;
+            border: 1px solid var(--border-color);
+            opacity: 0;
+            transition: opacity 1.2s ease;
+        }
+
+        .header-date {
+            font-size: 18px;
+            letter-spacing: 4px;
+            color: var(--gold-primary);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .sub-title {
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold-primary);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .names {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            font-weight: 400;
+            color: var(--text-dark);
+            margin: 10px 0 20px 0;
+            letter-spacing: 1px;
+        }
+
+        .description {
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--text-muted);
+            font-weight: 300;
+            margin-bottom: 25px;
+        }
+
+        .section {
+            margin: 35px 0;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        /* GERİSAYIM */
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .time-box {
+            background: var(--bg-color);
+            padding: 12px 8px;
+            border-radius: 6px;
+            min-width: 65px;
+            border: 1px solid var(--border-color);
+        }
+
+        .time-box span {
+            display: block;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--gold-primary);
+        }
+
+        .time-box label {
+            font-size: 10px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* TOY PROQRAMI */
+        .program-list {
+            text-align: left;
+            max-width: 320px;
+            margin: 0 auto;
+        }
+
+        .program-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .program-time {
+            font-weight: 600;
+            color: var(--gold-primary);
+            font-size: 13px;
+            width: 70px;
+            border-right: 2px solid var(--gold-primary);
+            padding-right: 10px;
+        }
+
+        .program-desc {
+            font-size: 13px;
+            color: var(--text-dark);
+            padding-left: 15px;
+        }
+
+        /* DÜYMƏLƏR VƏ XƏRİTƏ */
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--gold-primary);
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-weight: 500;
+        }
+
+        .btn:hover {
+            background-color: var(--gold-hover);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--gold-primary);
+            border: 1px solid var(--gold-primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--gold-primary);
+            color: white;
+        }
+
+        /* RSVP SEÇİMLƏRİ VƏ FORM */
+        .rsvp-options {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .rsvp-btn {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-color);
+            color: var(--text-dark);
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        .rsvp-btn.active {
+            background: var(--gold-primary);
+            color: white;
+            border-color: var(--gold-primary);
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px 12px;
+            margin: 6px 0;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 13px;
+            background-color: #fafafa;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--gold-primary);
+        }
+
+        .wishes-list {
+            margin-top: 20px;
+            text-align: left;
+            max-height: 180px;
+            overflow-y: auto;
+        }
+
+        .wish-item {
+            background: var(--bg-color);
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            font-size: 12px;
+            border-left: 2px solid var(--gold-primary);
+        }
+
+        .wish-item strong {
+            color: var(--text-dark);
+            display: block;
+            margin-bottom: 3px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Musiqi: Bensound - Angels By My Side (Birbaşa audio keçid) -->
+    <audio id="bg-music" loop preload="auto">
+        <source src="https://www.bensound.com/bensound-img/angelsbymyside.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- ZƏRF EKRANI -->
+    <div id="envelope-screen">
+        <div class="envelope">
+            <div class="seal-btn" onclick="openInvitation()">N & L</div>
+        </div>
+        <div class="tap-text">Açmaq üçün toxunun</div>
+    </div>
+
+    <!-- DƏVƏTNAMƏ İÇƏRİYİ -->
+    <div id="main-card">
+        <div class="header-date">10.10.2026</div>
+        <div class="sub-title">Xoş gəldiniz</div>
+        <div class="names">Nizami & Lətifə</div>
+        <p class="description">
+            Həyatımızın ən xüsusi və unudulmaz gününü siz dəyərli doğmalarımız və dostlarımızla bölüşməkdən böyük xoşbəxtlik duyarıq.
+        </p>
+
+        <!-- GERİSAYIM -->
+        <div class="section">
+            <div class="sub-title">Toya qalan vaxt</div>
+            <div class="countdown">
+                <div class="time-box"><span id="days">00</span><label>Gün</label></div>
+                <div class="time-box"><span id="hours">00</span><label>Saat</label></div>
+                <div class="time-box"><span id="minutes">00</span><label>Dəqiqə</label></div>
+                <div class="time-box"><span id="seconds">00</span><label>Saniyə</label></div>
+            </div>
+        </div>
+
+        <!-- TOY PROQRAMI -->
+        <div class="section">
+            <div class="section-title">Toy Proqramı</div>
+            <div class="program-list">
+                <div class="program-item">
+                    <div class="program-time">18:00</div>
+                    <div class="program-desc">Qonaqların qarşılanması</div>
+                </div>
+                <div class="program-item">
+                    <div class="program-time">19:00</div>
+                    <div class="program-desc">Bəy və Gəlinin gəlişi</div>
+                </div>
+                <div class="program-item">
+                    <div class="program-time">20:00</div>
+                    <div class="program-desc">Təbrik və Şam yeməyi</div>
+                </div>
+                <div class="program-item">
+                    <div class="program-time">22:00</div>
+                    <div class="program-desc">Tort kəsilməsi mərasimi</div>
+                </div>
+                <div class="program-item">
+                    <div class="program-time">23:00</div>
+                    <div class="program-desc">Musiqi və Şou proqramı</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MƏKAN VƏ XƏRİTƏ -->
+        <div class="section">
+            <div class="section-title">Məkan və Tarix</div>
+            <p style="font-weight: 500; font-size: 14px;">10 Oktyabr 2026, Saat 18:00</p>
+            <p style="font-size: 13px; color: var(--text-muted); margin-top: 5px;">Diva Wedding Hall</p>
+            <p style="font-size: 12px; color: var(--text-muted);">Həsən Əliyev küç. 141, Bakı</p>
+            
+            <div class="btn-group">
+                <a href="https://maps.app.goo.gl/dsJuvUECAsK6DVbp9" target="_blank" class="btn">Google Maps</a>
+                <a href="https://ul.waze.com/ul?venue_id=32702868.326766537.12365347&overview=yes&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location" target="_blank" class="btn btn-outline">Waze Naviqasiya</a>
+            </div>
+        </div>
+
+        <!-- RSVP (GƏLİŞİN TƏSDİQİ) -->
+        <div class="section">
+            <div class="section-title">İştirak Təsdiqi (RSVP)</div>
+            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">Lütfən oktyabr ayına qədər iştirak edib-etməyəcəyinizi bildirin.</p>
+            
+            <form id="rsvpForm">
+                <div class="rsvp-options">
+                    <button type="button" class="rsvp-btn active" onclick="selectAttendance('Gələcəyəm', this)">✓ Gələcəyəm</button>
+                    <button type="button" class="rsvp-btn" onclick="selectAttendance('Gələ bilməyəcəyəm', this)">✕ Gələ bilməyəcəyəm</button>
+                </div>
+                <input type="hidden" id="attendanceStatus" value="Gələcəyəm">
+                
+                <input type="text" id="rsvpName" placeholder="Adınız və Soyadınız" required>
+                <select id="guestCount" required>
+                    <option value="" disabled selected>Qonaq sayısı (özünüz daxil)</option>
+                    <option value="1 nəfər">1 nəfər</option>
+                    <option value="2 nəfər">2 nəfər</option>
+                    <option value="3 nəfər">3 nəfər</option>
+                    <option value="4+ nəfər">4 və ya daha çox</option>
+                </select>
+                <button type="submit" class="btn" style="width: 100%; margin-top: 10px;">Təsdiq Et</button>
+            </form>
+        </div>
+
+        <!-- ÜRƏK SÖZLƏRİ BÖLMƏSİ -->
+        <div class="section">
+            <div class="section-title">Ürək Sözləriniz</div>
+            <form id="wishForm">
+                <input type="text" id="guestName" placeholder="Adınız və Soyadınız" required>
+                <textarea id="guestWish" rows="3" placeholder="Təbrikinizi və xoş arzularınızı bura yaza bilərsiniz..." required></textarea>
+                <button type="submit" class="btn btn-outline" style="width: 100%; margin-top: 5px;">Təbriki Göndər</button>
+            </form>
+
+            <div class="wishes-list" id="wishesList"></div>
+        </div>
+    </div>
+
+    <script>
+        function openInvitation() {
+            var screen = document.getElementById('envelope-screen');
+            var card = document.getElementById('main-card');
+            var music = document.getElementById('bg-music');
+
+            music.play().catch(function(error) {
+                console.log("Musiqi səsləndirilə bilmədi:", error);
+            });
+
+            screen.style.opacity = '0';
+            setTimeout(function() {
+                screen.style.display = 'none';
+                card.style.display = 'block';
+                setTimeout(function() {
+                    card.style.opacity = '1';
+                }, 50);
+            }, 800);
+        }
+
+        // Toy Tarixi: 10 Oktyabr 2026, 18:00
+        var weddingDate = new Date("Oct 10, 2026 18:00:00").getTime();
+
+        var timer = setInterval(function() {
+            var now = new Date().getTime();
+            var distance = weddingDate - now;
+
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = days < 10 ? "0" + days : days;
+            document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
+            document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+
+            if (distance < 0) {
+                clearInterval(timer);
+                document.querySelector(".countdown").innerHTML = "Toy Günü Çatdı!";
+            }
+        }, 1000);
+
+        // RSVP Seçimi
+        function selectAttendance(status, btn) {
+            document.getElementById('attendanceStatus').value = status;
+            var buttons = document.querySelectorAll('.rsvp-btn');
+            buttons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        // RSVP Göndərilməsi
+        document.getElementById('rsvpForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var status = document.getElementById('attendanceStatus').value;
+            var name = document.getElementById('rsvpName').value;
+            var count = document.getElementById('guestCount').value;
+
+            var phone = "994705612656";
+            var text = "Salam! Mən " + name + ". Toyda " + status + ". Qonaq sayı: " + count + ".";
+            var url = "https://wa.me/" + phone + "?text=" + encodeURIComponent(text);
+
+            window.open(url, '_blank');
+        });
+
+        // Ürək Sözləri Formu
+        document.getElementById('wishForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var name = document.getElementById('guestName').value;
+            var wish = document.getElementById('guestWish').value;
+
+            var wishesList = document.getElementById('wishesList');
+            var newWish = document.createElement('div');
+            newWish.className = 'wish-item';
+            newWish.innerHTML = '<strong>' + name + '</strong>' + wish;
+
+            wishesList.prepend(newWish);
+
+            document.getElementById('guestName').value = '';
+            document.getElementById('guestWish').value = '';
+        });
+    </script>
+</body>
+</html>
