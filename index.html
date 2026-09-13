@@ -9,10 +9,12 @@
         :root {
             --bg-color: #f7f4ef;
             --card-bg: #ffffff;
-            --envelope-bg: #eae3d2;
-            --envelope-top: #dfd6c3;
+            --envelope-bg: #f2ebd9;
+            --envelope-flap: #e6dcbe;
             --gold-primary: #c5a059;
             --gold-hover: #b08b46;
+            --ribbon-color: #d4af37;
+            --ribbon-shadow: #997819;
             --text-dark: #333333;
             --text-muted: #777777;
             --border-color: #e8e2d5;
@@ -63,82 +65,141 @@
             100% { transform: translateY(105vh) rotate(180deg) scale(0.8); opacity: 0; }
         }
 
-        /* ZƏRF EKRANI */
+        /* TAM EKRAN LENTLİ ZƏRF EKRANI */
         #envelope-screen {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: var(--bg-color);
+            width: 100vw;
+            height: 100vh;
+            background-color: var(--envelope-bg);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            perspective: 1000px;
-            transition: opacity 1s ease 0.6s, visibility 1s 0.6s;
+            transition: opacity 1.2s ease, visibility 1.2s ease;
+            box-shadow: inset 0 0 100px rgba(197, 160, 89, 0.15);
         }
 
-        .envelope-wrapper {
-            position: relative;
-            width: 300px;
-            height: 200px;
-            background-color: var(--envelope-bg);
-            border-radius: 0 0 8px 8px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        /* KƏNAR ÇƏRÇİVƏ ZƏRİFLİYİ */
+        .envelope-border {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            border: 2px solid rgba(197, 160, 89, 0.3);
+            pointer-events: none;
         }
 
-        .envelope-flap {
+        /* QIZILI ATLAS LENTLƏR */
+        .ribbon-vertical {
             position: absolute;
             top: 0;
-            left: 0;
-            width: 0;
-            height: 0;
-            border-left: 150px solid transparent;
-            border-right: 150px solid transparent;
-            border-top: 110px solid var(--envelope-top);
-            transform-origin: top;
-            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 3;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 45px;
+            height: 100%;
+            background: linear-gradient(90deg, var(--ribbon-shadow) 0%, var(--ribbon-color) 30%, #fff 50%, var(--ribbon-color) 70%, var(--ribbon-shadow) 100%);
+            box-shadow: 0 0 15px rgba(0,0,0,0.15);
+            z-index: 2;
+            transition: transform 1s ease, opacity 1s ease;
         }
 
-        .seal-btn {
+        .ribbon-horizontal {
             position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 100%;
+            height: 45px;
+            background: linear-gradient(180deg, var(--ribbon-shadow) 0%, var(--ribbon-color) 30%, #fff 50%, var(--ribbon-color) 70%, var(--ribbon-shadow) 100%);
+            box-shadow: 0 0 15px rgba(0,0,0,0.15);
+            z-index: 2;
+            transition: transform 1s ease, opacity 1s ease;
+        }
+
+        /* LENT DÜYÜNÜ VƏ MÖHÜR */
+        .seal-wrapper {
+            position: relative;
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .bow-knot {
+            position: absolute;
+            width: 140px;
+            height: 140px;
+            pointer-events: none;
             z-index: 4;
-            width: 75px;
-            height: 75px;
-            background: linear-gradient(135deg, #d4af37 0%, #aa7c11 100%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* MÖHÜR DÜYMƏSİ */
+        .seal-btn {
+            width: 90px;
+            height: 90px;
+            background: radial-gradient(circle, #e5c158 0%, #a87913 100%);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             color: #ffffff;
-            font-size: 18px;
+            font-size: 20px;
             font-weight: bold;
-            box-shadow: 0 6px 15px rgba(197, 160, 89, 0.4);
-            cursor: pointer;
-            border: 2px solid #ffffff;
-            transition: transform 0.3s ease, opacity 0.4s ease;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3), inset 0 0 10px rgba(255,255,255,0.5);
+            border: 3px solid #ffffff;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            z-index: 6;
         }
 
-        .seal-btn:hover { transform: scale(1.05); }
+        .seal-btn:hover {
+            transform: scale(1.08);
+            box-shadow: 0 15px 30px rgba(197, 160, 89, 0.5), inset 0 0 12px rgba(255,255,255,0.8);
+        }
 
         .tap-text {
-            margin-top: 35px;
+            margin-top: 25px;
             font-size: 13px;
             color: var(--gold-primary);
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            font-weight: 500;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px 16px;
+            border-radius: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            z-index: 6;
         }
 
-        #envelope-screen.opened .envelope-flap { transform: rotateX(180deg); z-index: 1; }
-        #envelope-screen.opened .seal-btn { opacity: 0; pointer-events: none; }
-        #envelope-screen.opened { opacity: 0; visibility: hidden; }
+        /* AÇILIŞ ANİMASİYASI */
+        #envelope-screen.opened {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        #envelope-screen.opened .ribbon-vertical {
+            transform: translateX(-50%) scaleY(0);
+            opacity: 0;
+        }
+
+        #envelope-screen.opened .ribbon-horizontal {
+            transform: translateY(-50%) scaleX(0);
+            opacity: 0;
+        }
+
+        #envelope-screen.opened .seal-wrapper {
+            transform: scale(1.5);
+            opacity: 0;
+            transition: transform 0.8s ease, opacity 0.8s ease;
+        }
 
         /* ƏSAS KART */
         #main-card {
@@ -154,7 +215,7 @@
             box-shadow: 0 15px 45px rgba(197, 160, 89, 0.12), 0 5px 20px rgba(0,0,0,0.05);
             text-align: center;
             border: 1px solid var(--border-color);
-            transition: opacity 1s ease, transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: opacity 1s ease 0.3s, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
             z-index: 10;
             position: relative;
             overflow: hidden;
@@ -328,14 +389,23 @@
 
     <div id="stars-container"></div>
 
+    <!-- TAM EKRAN LENTLİ ZƏRF EKRANI -->
     <div id="envelope-screen">
-        <div class="envelope-wrapper">
-            <div class="envelope-flap"></div>
-            <div class="seal-btn" onclick="openInvitation()">N & L</div>
+        <div class="envelope-border"></div>
+        <div class="ribbon-vertical"></div>
+        <div class="ribbon-horizontal"></div>
+
+        <div class="seal-wrapper" onclick="openInvitation()">
+            <!-- SVG LENT DÜYÜNÜ -->
+            <svg class="bow-knot" viewBox="0 0 100 100">
+                <path d="M 50 50 C 20 20, 10 40, 50 50 C 20 60, 10 80, 50 50 C 80 20, 90 40, 50 50 C 80 60, 90 80, 50 50" fill="#d4af37" stroke="#997819" stroke-width="2"/>
+            </svg>
+            <div class="seal-btn">N & L</div>
+            <div class="tap-text">Dəvətnaməni açmaq üçün daxil olun</div>
         </div>
-        <div class="tap-text">Açmaq üçün mühürə toxunun</div>
     </div>
 
+    <!-- ƏSAS DƏVƏTNAMƏ KART -->
     <div id="main-card">
         <svg class="leaf-decoration leaf-top-left" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M10 10 Q 50 10, 80 50 Q 50 40, 10 10 Z" fill="#c5a059" opacity="0.4"/>
@@ -538,8 +608,8 @@
             btn.classList.add('active');
         }
 
-        // GOOGLE SHEETS FORM GÖNDƏRİŞİ
-        var scriptURL = "https://script.google.com/macros/s/AKfycbwVg7udeZn6jnPE32_hfLALciLfEw8WTb62fVQvePSULnpkCbtyGeqPkMphVyGjTdDD/exec";
+        // ALDIĞINIZ GOOGLE APPS SCRIPT LINKI INTEQRASIYA OLUNDU
+        var scriptURL = "https://script.google.com/macros/s/AKfycby_6u4N2Zp_mBVNDKdstAQp0G2v-qb8wqkAkcwDKZQwb_55fMCcb3Ncy8DAJw7oPdcg/exec";
 
         document.getElementById('rsvpForm').addEventListener('submit', function(e) {
             e.preventDefault();
