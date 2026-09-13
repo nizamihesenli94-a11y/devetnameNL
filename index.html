@@ -84,12 +84,12 @@
             visibility: hidden;
         }
 
-        /* MAKSİMUM BÖYÜDÜLMÜŞ ZƏRF */
+        /* BÖYÜK ZƏRF */
         .envelope-3d {
             position: relative;
             width: 95vw;
-            max-width: 640px; /* Daha böyük zərf */
-            height: 420px;    /* Hündürlüyü də artırıldı */
+            max-width: 640px;
+            height: 420px;
             background: var(--envelope-color);
             border-radius: 16px;
             box-shadow: 0 40px 80px rgba(197, 160, 89, 0.18), 0 15px 35px rgba(0,0,0,0.06);
@@ -109,33 +109,79 @@
             z-index: 2;
         }
 
-        /* QIZILI BANT (RIBBON) STRUKTURU */
-        .ribbon-horizontal {
+        /* BANT STRUKTURU VƏ DÜYÜN DİZAYNI */
+        .ribbon-horizontal-line {
             position: absolute;
             top: 50%;
             left: 0;
             width: 100%;
-            height: 38px;
+            height: 32px;
             background: linear-gradient(180deg, #d4af37 0%, #fff3a7 40%, #aa771c 80%, #fbf5b7 100%);
             transform: translateY(-50%);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
             z-index: 12;
             pointer-events: none;
             transition: opacity 0.5s ease;
         }
 
-        .ribbon-vertical {
+        .bow-container {
             position: absolute;
+            top: 50%;
             left: 50%;
-            top: 0;
-            width: 38px;
-            height: 100%;
-            background: linear-gradient(90deg, #d4af37 0%, #fff3a7 40%, #aa771c 80%, #fbf5b7 100%);
-            transform: translateX(-50%);
-            box-shadow: 4px 0 12px rgba(0,0,0,0.1);
-            z-index: 12;
+            transform: translate(-50%, -50%);
+            width: 180px;
+            height: 100px;
+            z-index: 13;
             pointer-events: none;
             transition: opacity 0.5s ease;
+        }
+
+        .bow-loop-left {
+            position: absolute;
+            top: 22px;
+            left: 10px;
+            width: 65px;
+            height: 40px;
+            background: linear-gradient(135deg, #d4af37 0%, #fff3a7 50%, #aa771c 100%);
+            border-radius: 50px 10px 10px 50px;
+            transform: rotate(-12deg);
+            box-shadow: -4px 4px 10px rgba(0,0,0,0.15);
+        }
+
+        .bow-loop-right {
+            position: absolute;
+            top: 22px;
+            right: 10px;
+            width: 65px;
+            height: 40px;
+            background: linear-gradient(-135deg, #d4af37 0%, #fff3a7 50%, #aa771c 100%);
+            border-radius: 10px 50px 50px 10px;
+            transform: rotate(12deg);
+            box-shadow: 4px 4px 10px rgba(0,0,0,0.15);
+        }
+
+        .bow-tail-left {
+            position: absolute;
+            top: 50px;
+            left: 35px;
+            width: 30px;
+            height: 60px;
+            background: linear-gradient(180deg, #d4af37 0%, #aa771c 100%);
+            clip-path: polygon(0 0, 100% 0, 80% 100%, 0 85%);
+            transform: rotate(15deg);
+            box-shadow: -2px 5px 8px rgba(0,0,0,0.12);
+        }
+
+        .bow-tail-right {
+            position: absolute;
+            top: 50px;
+            right: 35px;
+            width: 30px;
+            height: 60px;
+            background: linear-gradient(180deg, #d4af37 0%, #aa771c 100%);
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 20% 100%);
+            transform: rotate(-15deg);
+            box-shadow: 2px 5px 8px rgba(0,0,0,0.12);
         }
 
         /* ZƏRFİN YUXARI QAPAĞI */
@@ -202,8 +248,8 @@
         }
 
         .seal-btn {
-            width: 90px;
-            height: 90px;
+            width: 85px;
+            height: 85px;
             background: var(--gold-gradient);
             border-radius: 50%;
             display: flex;
@@ -226,7 +272,7 @@
         }
 
         .tap-hint {
-            margin-top: 20px;
+            margin-top: 25px;
             font-size: 10px;
             color: var(--gold-solid);
             letter-spacing: 3px;
@@ -247,8 +293,8 @@
         }
 
         #envelope-wrapper.open-flap .seal-wrapper,
-        #envelope-wrapper.open-flap .ribbon-horizontal,
-        #envelope-wrapper.open-flap .ribbon-vertical {
+        #envelope-wrapper.open-flap .ribbon-horizontal-line,
+        #envelope-wrapper.open-flap .bow-container {
             opacity: 0;
             pointer-events: none;
         }
@@ -443,7 +489,7 @@
 
     <div id="stars-container"></div>
 
-    <!-- LUX BÖYÜK ZƏRF KƏSİŞƏN BANT İLƏ -->
+    <!-- LUX BÖYÜK ZƏRF DÜYÜNLÜ BANT İLƏ -->
     <div id="envelope-wrapper">
         <div class="envelope-3d">
             <div class="envelope-inner-frame"></div>
@@ -452,9 +498,16 @@
             <div class="envelope-side-right"></div>
             <div class="envelope-bottom"></div>
 
-            <!-- QIZILI BANTLARI ƏLAVƏ EDİRİK -->
-            <div class="ribbon-horizontal"></div>
-            <div class="ribbon-vertical"></div>
+            <!-- QIZILI HORİZONTAL BANT QATI -->
+            <div class="ribbon-horizontal-line"></div>
+
+            <!-- DÜYÜN DİZAYNI -->
+            <div class="bow-container">
+                <div class="bow-loop-left"></div>
+                <div class="bow-loop-right"></div>
+                <div class="bow-tail-left"></div>
+                <div class="bow-tail-right"></div>
+            </div>
 
             <div class="seal-wrapper" onclick="startUnfoldSequence()">
                 <div class="seal-btn">
