@@ -10,6 +10,7 @@
             --bg-color: #f7f4ef;
             --card-bg: #ffffff;
             --envelope-bg: #eae3d2;
+            --envelope-top: #dfd6c3;
             --gold-primary: #c5a059;
             --gold-hover: #b08b46;
             --text-dark: #333333;
@@ -32,9 +33,47 @@
             align-items: center;
             min-height: 100vh;
             overflow-x: hidden;
+            position: relative;
         }
 
-        /* ZƏRF EKRANI (AXAN ANİMASİYA İLƏ) */
+        /* ULDUZLAR ANİMASİYASI KONTEYNERİ */
+        #stars-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            background-color: var(--gold-primary);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            opacity: 0;
+            animation: fallAndTwinkle linear infinite;
+        }
+
+        @keyframes fallAndTwinkle {
+            0% {
+                transform: translateY(-20px) rotate(0deg) scale(0.3);
+                opacity: 0;
+            }
+            20% {
+                opacity: 0.8;
+            }
+            80% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(105vh) rotate(180deg) scale(0.8);
+                opacity: 0;
+            }
+        }
+
+        /* ZƏRF EKRANI (3D YUMŞAQ AÇILIŞ) */
         #envelope-screen {
             position: fixed;
             top: 0;
@@ -47,51 +86,61 @@
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease;
+            perspective: 1000px;
+            transition: opacity 1s ease 0.6s, visibility 1s 0.6s;
         }
 
-        #envelope-screen.open-animation {
-            transform: translateY(100%);
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .envelope {
-            width: 290px;
+        .envelope-wrapper {
+            position: relative;
+            width: 300px;
             height: 200px;
             background-color: var(--envelope-bg);
-            border-radius: 8px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-            position: relative;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
             display: flex;
             justify-content: center;
             align-items: center;
-            border: 1px solid var(--border-color);
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-top: 110px solid var(--envelope-top);
+            transform-origin: top;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 3;
         }
 
         .seal-btn {
-            width: 75px;
-            height: 75px;
+            position: absolute;
+            z-index: 4;
+            width: 70px;
+            height: 70px;
             background: linear-gradient(135deg, #d4af37 0%, #aa7c11 100%);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             color: #ffffff;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             box-shadow: 0 6px 15px rgba(197, 160, 89, 0.4);
             cursor: pointer;
             border: 2px solid #ffffff;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, opacity 0.4s ease;
         }
 
         .seal-btn:hover {
-            transform: scale(1.05);
+            transform: scale(1.06);
         }
 
         .tap-text {
-            margin-top: 25px;
+            margin-top: 35px;
             font-size: 12px;
             color: var(--gold-primary);
             letter-spacing: 2px;
@@ -99,11 +148,27 @@
             font-weight: 500;
         }
 
+        /* ZƏRF AÇILMA ANİMASİYA SİNFİ */
+        .envelope-screen.opened .envelope-flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .envelope-screen.opened .seal-btn {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .envelope-screen.opened {
+            opacity: 0;
+            visibility: hidden;
+        }
+
         /* ƏSAS DƏVƏTNAMƏ KARTOCASI */
         #main-card {
             display: none;
             opacity: 0;
-            transform: scale(0.95);
+            transform: translateY(40px) scale(0.96);
             width: 100%;
             max-width: 500px;
             background: var(--card-bg);
@@ -113,24 +178,23 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.05);
             text-align: center;
             border: 1px solid var(--border-color);
-            transition: opacity 1s ease 0.3s, transform 1s ease 0.3s;
+            transition: opacity 1s ease, transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 10;
         }
 
         #main-card.show-card {
             display: block;
             opacity: 1;
-            transform: scale(1);
+            transform: translateY(0) scale(1);
         }
 
         .card-inner-border {
             border: 1px solid rgba(197, 160, 89, 0.35);
             padding: 25px 15px;
             border-radius: 4px;
-            position: relative;
             background: radial-gradient(circle, rgba(255,255,255,1) 60%, rgba(247,244,239,0.4) 100%);
         }
 
-        /* NAXIŞ XƏTLƏRİ (DIVIDER) */
         .divider-line {
             display: flex;
             align-items: center;
@@ -211,7 +275,35 @@
             font-weight: 600;
         }
 
-        /* GEYİM KODU */
+        /* TOY PROQRAMI BÖLMƏSİ */
+        .program-list {
+            text-align: left;
+            max-width: 310px;
+            margin: 0 auto;
+        }
+
+        .program-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .program-time {
+            font-weight: 600;
+            color: var(--gold-primary);
+            font-size: 13px;
+            width: 65px;
+            border-right: 2px solid var(--gold-primary);
+            padding-right: 10px;
+        }
+
+        .program-desc {
+            font-size: 13px;
+            color: var(--text-dark);
+            padding-left: 12px;
+        }
+
+        /* GEYİM KODU BÖLMƏSİ */
         .dress-code-container {
             display: flex;
             gap: 12px;
@@ -238,36 +330,6 @@
             color: var(--text-dark);
         }
 
-        /* TOY PROQRAMI BÖLMƏSİ */
-        .program-list {
-            text-align: left;
-            max-width: 300px;
-            margin: 0 auto;
-        }
-
-        .program-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 12px;
-            position: relative;
-        }
-
-        .program-time {
-            font-weight: 600;
-            color: var(--gold-primary);
-            font-size: 13px;
-            width: 65px;
-            border-right: 2px solid var(--gold-primary);
-            padding-right: 10px;
-        }
-
-        .program-desc {
-            font-size: 13px;
-            color: var(--text-dark);
-            padding-left: 12px;
-        }
-
-        /* GERİSAYIM */
         .countdown {
             display: flex;
             justify-content: center;
@@ -387,9 +449,13 @@
         <source src="music.mp3" type="audio/mpeg">
     </audio>
 
+    <!-- ULDUZLAR ANİMASİYASI CONTAINER -->
+    <div id="stars-container"></div>
+
     <!-- ZƏRF EKRANI -->
-    <div id="envelope-screen">
-        <div class="envelope">
+    <div id="envelope-screen" class="envelope-screen">
+        <div class="envelope-wrapper">
+            <div class="envelope-flap"></div>
             <div class="seal-btn" onclick="openInvitation()">N & L</div>
         </div>
         <div class="tap-text">Açmaq üçün mühürə toxunun</div>
@@ -509,36 +575,53 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT KODLARI -->
     <script>
         function openInvitation() {
             var screen = document.getElementById('envelope-screen');
             var card = document.getElementById('main-card');
             var music = document.getElementById('bg-music');
 
-            // Musiqini oxut
             if (music) {
                 music.play().catch(function(err) {
-                    console.log("Musiqi avtomatik başladıla bilmədi:", err);
+                    console.log("Musiqi dəstəklənmədi:", err);
                 });
             }
 
-            // Kartı görünən et
+            // Zərf qapağını yumşaq açmaq
+            screen.classList.add('opened');
             card.style.display = 'block';
 
-            // AXAN ANİMASİYA: Zərf sürüşərək itir, Kart yumşaq animasiya ilə gəlir
             setTimeout(function() {
-                screen.classList.add('open-animation');
                 card.classList.add('show-card');
-            }, 50);
-
-            // Animasiya bitdikdən sonra zərf elementini ekrandan tam yığışdır
-            setTimeout(function() {
-                screen.style.display = 'none';
-            }, 1000);
+                createStars(); // Ulduzlar animasiyasını başlatmaq
+            }, 400);
         }
 
-        // Gerisayım (10 Oktyabr 2026)
+        // XIRDA ULDUZLARIN DÜŞMƏ ANİMASİYASI
+        function createStars() {
+            var container = document.getElementById('stars-container');
+            var starCount = 25; // Ekranda süzülən ulduzların sayı
+
+            for (var i = 0; i < starCount; i++) {
+                var star = document.createElement('div');
+                star.className = 'star';
+                
+                var size = Math.random() * 8 + 6; // 6px - 14px arası xırda ölçü
+                var left = Math.random() * 100; // Ekranda təsadüfi üfüqi mövqe
+                var duration = Math.random() * 5 + 4; // 4s - 9s arası düşmə sürəti
+                var delay = Math.random() * 5; // Müxtəlif vaxtlarda başlamaq üçün
+
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.left = left + '%';
+                star.style.animationDuration = duration + 's';
+                star.style.animationDelay = delay + 's';
+
+                container.appendChild(star);
+            }
+        }
+
+        // GERİSAYIM (10 Oktyabr 2026)
         var weddingDate = new Date("Oct 10, 2026 18:00:00").getTime();
 
         setInterval(function() {
@@ -558,7 +641,6 @@
             }
         }, 1000);
 
-        // RSVP Düymə Seçimi
         function selectAttendance(status, btn) {
             document.getElementById('attendanceStatus').value = status;
             var buttons = document.querySelectorAll('.rsvp-btn');
@@ -566,7 +648,6 @@
             btn.classList.add('active');
         }
 
-        // Form Göndərişi
         document.getElementById('combinedForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
