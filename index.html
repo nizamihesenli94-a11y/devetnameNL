@@ -547,95 +547,83 @@
         </div>
     </div>
 
-    <script>
+    <script>});
         function openInvitation() {
-            var screen = document.getElementById('envelope-screen');
-            var card = document.getElementById('main-card');
-            var music = document.getElementById('bg-music');
+        var screen = document.getElementById('envelope-screen');
+        var card = document.getElementById('main-card');
+        var music = document.getElementById('bg-music');
 
-            if (music) {
-                music.currentTime = 0;
-                var playPromise = music.play();
-                if (playPromise !== undefined) {
-                    playPromise.then(function() {
-                        console.log("Musiqi çalınır");
-                    }).catch(function(error) {
-                        console.log("Brauzer musiqiyə engel oldu:", error);
-                    });
-                }
-            }
-
-            screen.style.opacity = '0';
-            setTimeout(function() {
-                screen.style.display = 'none';
-                card.style.display = 'block';
-                setTimeout(function() {
-                    card.style.opacity = '1';
-                }, 50);
-            }, 800);
+        // 1. Musiqini oxut
+        if (music) {
+            music.currentTime = 0;
+            music.play().catch(function(e) { 
+                console.log("Musiqi xətası:", e); 
+            });
         }
 
-        // Toy Tarixi: 10 Oktyabr 2026, 18:00
-        var weddingDate = new Date("Oct 10, 2026 18:00:00").getTime();
+        // 2. Zərfi gizlət və dəvətnaməni göstər
+        screen.style.display = 'none';
+        card.style.display = 'block';
+        card.style.opacity = '1';
+    }
 
-        var timer = setInterval(function() {
-            var now = new Date().getTime();
-            var distance = weddingDate - now;
+    // Toy Tarixi: 10 Oktyabr 2026, 18:00
+    var weddingDate = new Date("Oct 10, 2026 18:00:00").getTime();
 
-            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    var timer = setInterval(function() {
+        var now = new Date().getTime();
+        var distance = weddingDate - now;
 
-            document.getElementById("days").innerText = days < 10 ? "0" + days : days;
-            document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
-            document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
-            document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            if (distance < 0) {
-                clearInterval(timer);
-                document.querySelector(".countdown").innerHTML = "Toy Günü Çatdı!";
-            }
-        }, 1000);
+        document.getElementById("days").innerText = days < 10 ? "0" + days : days;
+        document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
+        document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+        document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
 
-        function selectAttendance(status, btn) {
-            document.getElementById('attendanceStatus').value = status;
-            var buttons = document.querySelectorAll('.rsvp-btn');
-            buttons.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+        if (distance < 0) {
+            clearInterval(timer);
+            document.querySelector(".countdown").innerHTML = "Toy Günü Çatdı!";
+        }
+    }, 1000);
+
+    function selectAttendance(status, btn) {
+        document.getElementById('attendanceStatus').value = status;
+        var buttons = document.querySelectorAll('.rsvp-btn');
+        buttons.forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+    }
+
+    document.getElementById('combinedForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        var status = document.getElementById('attendanceStatus').value;
+        var name = document.getElementById('guestName').value;
+        var count = document.getElementById('guestCount').value;
+        var wish = document.getElementById('guestWish').value.trim();
+
+        if (wish !== "") {
+            var wishesList = document.getElementById('wishesList');
+            var newWish = document.createElement('div');
+            newWish.className = 'wish-item';
+            newWish.innerHTML = '<strong>' + name + '</strong>' + wish;
+            wishesList.prepend(newWish);
         }
 
-        // Birləşdirilmiş Təsdiq Funksiyası
-        document.getElementById('combinedForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            var status = document.getElementById('attendanceStatus').value;
-            var name = document.getElementById('guestName').value;
-            var count = document.getElementById('guestCount').value;
-            var wish = document.getElementById('guestWish').value.trim();
+        var phone = "994705612656";
+        var text = "Salam! Mən " + name + ".\nToyda " + status + ".\nQonaq sayı: " + count + ".";
+        if (wish !== "") {
+            text += "\nÜrək sözlərim: " + wish;
+        }
 
-            // Səhifəyə arzunu əlavə et (əgər yazılıbsa)
-            if (wish !== "") {
-                var wishesList = document.getElementById('wishesList');
-                var newWish = document.createElement('div');
-                newWish.className = 'wish-item';
-                newWish.innerHTML = '<strong>' + name + '</strong>' + wish;
-                wishesList.prepend(newWish);
-            }
+        var url = "https://wa.me/" + phone + "?text=" + encodeURIComponent(text);
+        window.open(url, '_blank');
 
-            // WhatsApp göndərişi hazırlamaq
-            var phone = "994705612656";
-            var text = "Salam! Mən " + name + ".\nToyda " + status + ".\nQonaq sayı: " + count + ".";
-            if (wish !== "") {
-                text += "\nÜrək sözlərim: " + wish;
-            }
-
-            var url = "https://wa.me/" + phone + "?text=" + encodeURIComponent(text);
-            window.open(url, '_blank');
-
-            // Sahələri təmizləmək
-            document.getElementById('guestWish').value = '';
-        });
+        document.getElementById('guestWish').value = '';
+    });
     </script>
 </body>
 </html>
