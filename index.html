@@ -106,7 +106,7 @@
             width: 100%;
             max-width: 520px;
             background: var(--card-bg);
-            padding: 45px 30px;
+            padding: 55px 35px;
             margin: 20px;
             border-radius: 8px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.04);
@@ -114,6 +114,52 @@
             border: 1px solid var(--border-color);
             opacity: 0;
             transition: opacity 1.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* QIZILI YARPAQ NAXIŞLARI */
+        .gold-corner {
+            position: absolute;
+            width: 90px;
+            height: 90px;
+            background-repeat: no-repeat;
+            background-size: contain;
+            opacity: 0.35;
+            pointer-events: none;
+        }
+
+        .corner-top-left {
+            top: 10px;
+            left: 10px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%23c5a059' d='M10,10 C30,10 50,20 60,40 C50,25 30,15 10,10 Z M10,10 C10,30 20,50 40,60 C25,50 15,30 10,10 Z M25,25 C40,20 55,30 65,50 C50,40 35,35 25,25 Z M25,25 C20,40 30,55 50,65 C40,50 35,35 25,25 Z'/%3E%3Ccircle cx='10' cy='10' r='3' fill='%23c5a059'/%3E%3C/svg%3E");
+        }
+
+        .corner-top-right {
+            top: 10px;
+            right: 10px;
+            transform: scaleX(-1);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%23c5a059' d='M10,10 C30,10 50,20 60,40 C50,25 30,15 10,10 Z M10,10 C10,30 20,50 40,60 C25,50 15,30 10,10 Z M25,25 C40,20 55,30 65,50 C50,40 35,35 25,25 Z M25,25 C20,40 30,55 50,65 C40,50 35,35 25,25 Z'/%3E%3Ccircle cx='10' cy='10' r='3' fill='%23c5a059'/%3E%3C/svg%3E");
+        }
+
+        .corner-bottom-left {
+            bottom: 10px;
+            left: 10px;
+            transform: scaleY(-1);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%23c5a059' d='M10,10 C30,10 50,20 60,40 C50,25 30,15 10,10 Z M10,10 C10,30 20,50 40,60 C25,50 15,30 10,10 Z M25,25 C40,20 55,30 65,50 C50,40 35,35 25,25 Z M25,25 C20,40 30,55 50,65 C40,50 35,35 25,25 Z'/%3E%3Ccircle cx='10' cy='10' r='3' fill='%23c5a059'/%3E%3C/svg%3E");
+        }
+
+        .corner-bottom-right {
+            bottom: 10px;
+            right: 10px;
+            transform: scale(-1, -1);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%23c5a059' d='M10,10 C30,10 50,20 60,40 C50,25 30,15 10,10 Z M10,10 C10,30 20,50 40,60 C25,50 15,30 10,10 Z M25,25 C40,20 55,30 65,50 C50,40 35,35 25,25 Z M25,25 C20,40 30,55 50,65 C40,50 35,35 25,25 Z'/%3E%3Ccircle cx='10' cy='10' r='3' fill='%23c5a059'/%3E%3C/svg%3E");
+        }
+
+        .card-inner-border {
+            border: 1px solid rgba(197, 160, 89, 0.3);
+            padding: 25px 15px;
+            border-radius: 4px;
         }
 
         .header-date {
@@ -135,11 +181,12 @@
 
         .names {
             font-family: 'Playfair Display', serif;
-            font-size: 36px;
-            font-weight: 400;
-            color: var(--text-dark);
+            font-size: 38px;
+            font-weight: 600;
+            color: var(--gold-primary);
             margin: 10px 0 20px 0;
             letter-spacing: 1px;
+            text-shadow: 0 1px 2px rgba(197, 160, 89, 0.15);
         }
 
         .description {
@@ -158,13 +205,13 @@
 
         .section-title {
             font-family: 'Playfair Display', serif;
-            font-size: 20px;
-            color: var(--text-dark);
+            font-size: 22px;
+            color: var(--gold-primary);
             margin-bottom: 20px;
             font-weight: 600;
+            letter-spacing: 0.5px;
         }
 
-        /* GERİSAYIM */
         .countdown {
             display: flex;
             justify-content: center;
@@ -194,7 +241,6 @@
             letter-spacing: 1px;
         }
 
-        /* TOY PROQRAMI */
         .program-list {
             text-align: left;
             max-width: 320px;
@@ -222,7 +268,6 @@
             padding-left: 15px;
         }
 
-        /* DÜYMƏLƏR VƏ XƏRİTƏ */
         .btn-group {
             display: flex;
             justify-content: center;
@@ -262,7 +307,6 @@
             color: white;
         }
 
-        /* RSVP SEÇİMLƏRİ VƏ FORM */
         .rsvp-options {
             display: flex;
             justify-content: center;
@@ -322,7 +366,7 @@
         }
 
         .wish-item strong {
-            color: var(--text-dark);
+            color: var(--gold-primary);
             display: block;
             margin-bottom: 3px;
         }
@@ -330,9 +374,9 @@
 </head>
 <body>
 
-    <!-- Musiqi: Bensound - Angels By My Side (Birbaşa audio keçid) -->
+    <!-- Musiqi Faylı: `music.mp3` -->
     <audio id="bg-music" loop preload="auto">
-        <source src="https://www.bensound.com/bensound-img/angelsbymyside.mp3" type="audio/mpeg">
+        <source src="music.mp3" type="audio/mpeg">
     </audio>
 
     <!-- ZƏRF EKRANI -->
@@ -345,98 +389,105 @@
 
     <!-- DƏVƏTNAMƏ İÇƏRİYİ -->
     <div id="main-card">
-        <div class="header-date">10.10.2026</div>
-        <div class="sub-title">Xoş gəldiniz</div>
-        <div class="names">Nizami & Lətifə</div>
-        <p class="description">
-            Həyatımızın ən xüsusi və unudulmaz gününü siz dəyərli doğmalarımız və dostlarımızla bölüşməkdən böyük xoşbəxtlik duyarıq.
-        </p>
+        <div class="gold-corner corner-top-left"></div>
+        <div class="gold-corner corner-top-right"></div>
+        <div class="gold-corner corner-bottom-left"></div>
+        <div class="gold-corner corner-bottom-right"></div>
 
-        <!-- GERİSAYIM -->
-        <div class="section">
-            <div class="sub-title">Toya qalan vaxt</div>
-            <div class="countdown">
-                <div class="time-box"><span id="days">00</span><label>Gün</label></div>
-                <div class="time-box"><span id="hours">00</span><label>Saat</label></div>
-                <div class="time-box"><span id="minutes">00</span><label>Dəqiqə</label></div>
-                <div class="time-box"><span id="seconds">00</span><label>Saniyə</label></div>
-            </div>
-        </div>
+        <div class="card-inner-border">
+            <div class="header-date">10.10.2026</div>
+            <div class="sub-title">Xoş gəldiniz</div>
+            <div class="names">Nizami & Lətifə</div>
+            <p class="description">
+                Həyatımızın ən xüsusi və unudulmaz gününü siz dəyərli doğmalarımız və dostlarımızla bölüşməkdən böyük xoşbəxtlik duyarıq.
+            </p>
 
-        <!-- TOY PROQRAMI -->
-        <div class="section">
-            <div class="section-title">Toy Proqramı</div>
-            <div class="program-list">
-                <div class="program-item">
-                    <div class="program-time">18:00</div>
-                    <div class="program-desc">Qonaqların qarşılanması</div>
-                </div>
-                <div class="program-item">
-                    <div class="program-time">19:00</div>
-                    <div class="program-desc">Bəy və Gəlinin gəlişi</div>
-                </div>
-                <div class="program-item">
-                    <div class="program-time">20:00</div>
-                    <div class="program-desc">Təbrik və Şam yeməyi</div>
-                </div>
-                <div class="program-item">
-                    <div class="program-time">22:00</div>
-                    <div class="program-desc">Tort kəsilməsi mərasimi</div>
-                </div>
-                <div class="program-item">
-                    <div class="program-time">23:00</div>
-                    <div class="program-desc">Musiqi və Şou proqramı</div>
+            <!-- GERİSAYIM -->
+            <div class="section">
+                <div class="sub-title">Toya qalan vaxt</div>
+                <div class="countdown">
+                    <div class="time-box"><span id="days">00</span><label>Gün</label></div>
+                    <div class="time-box"><span id="hours">00</span><label>Saat</label></div>
+                    <div class="time-box"><span id="minutes">00</span><label>Dəqiqə</label></div>
+                    <div class="time-box"><span id="seconds">00</span><label>Saniyə</label></div>
                 </div>
             </div>
-        </div>
 
-        <!-- MƏKAN VƏ XƏRİTƏ -->
-        <div class="section">
-            <div class="section-title">Məkan və Tarix</div>
-            <p style="font-weight: 500; font-size: 14px;">10 Oktyabr 2026, Saat 18:00</p>
-            <p style="font-size: 13px; color: var(--text-muted); margin-top: 5px;">Diva Wedding Hall</p>
-            <p style="font-size: 12px; color: var(--text-muted);">Həsən Əliyev küç. 141, Bakı</p>
-            
-            <div class="btn-group">
-                <a href="https://maps.app.goo.gl/dsJuvUECAsK6DVbp9" target="_blank" class="btn">Google Maps</a>
-                <a href="https://ul.waze.com/ul?venue_id=32702868.326766537.12365347&overview=yes&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location" target="_blank" class="btn btn-outline">Waze Naviqasiya</a>
-            </div>
-        </div>
-
-        <!-- RSVP (GƏLİŞİN TƏSDİQİ) -->
-        <div class="section">
-            <div class="section-title">İştirak Təsdiqi (RSVP)</div>
-            <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">Lütfən oktyabr ayına qədər iştirak edib-etməyəcəyinizi bildirin.</p>
-            
-            <form id="rsvpForm">
-                <div class="rsvp-options">
-                    <button type="button" class="rsvp-btn active" onclick="selectAttendance('Gələcəyəm', this)">✓ Gələcəyəm</button>
-                    <button type="button" class="rsvp-btn" onclick="selectAttendance('Gələ bilməyəcəyəm', this)">✕ Gələ bilməyəcəyəm</button>
+            <!-- TOY PROQRAMI -->
+            <div class="section">
+                <div class="section-title">Toy Proqramı</div>
+                <div class="program-list">
+                    <div class="program-item">
+                        <div class="program-time">18:00</div>
+                        <div class="program-desc">Qonaqların qarşılanması</div>
+                    </div>
+                    <div class="program-item">
+                        <div class="program-time">19:00</div>
+                        <div class="program-desc">Bəy və Gəlinin gəlişi</div>
+                    </div>
+                    <div class="program-item">
+                        <div class="program-time">20:00</div>
+                        <div class="program-desc">Təbrik və Şam yeməyi</div>
+                    </div>
+                    <div class="program-item">
+                        <div class="program-time">22:00</div>
+                        <div class="program-desc">Tort kəsilməsi mərasimi</div>
+                    </div>
+                    <div class="program-item">
+                        <div class="program-time">23:00</div>
+                        <div class="program-desc">Musiqi və Şou proqramı</div>
+                    </div>
                 </div>
-                <input type="hidden" id="attendanceStatus" value="Gələcəyəm">
+            </div>
+
+            <!-- MƏKAN VƏ XƏRİTƏ -->
+            <div class="section">
+                <div class="section-title">Məkan və Tarix</div>
+                <p style="font-weight: 500; font-size: 14px;">10 Oktyabr 2026, Saat 18:00</p>
+                <p style="font-size: 13px; color: var(--text-muted); margin-top: 5px;">Diva Wedding Hall</p>
+                <p style="font-size: 12px; color: var(--text-muted);">Həsən Əliyev küç. 141, Bakı</p>
                 
-                <input type="text" id="rsvpName" placeholder="Adınız və Soyadınız" required>
-                <select id="guestCount" required>
-                    <option value="" disabled selected>Qonaq sayısı (özünüz daxil)</option>
-                    <option value="1 nəfər">1 nəfər</option>
-                    <option value="2 nəfər">2 nəfər</option>
-                    <option value="3 nəfər">3 nəfər</option>
-                    <option value="4+ nəfər">4 və ya daha çox</option>
-                </select>
-                <button type="submit" class="btn" style="width: 100%; margin-top: 10px;">Təsdiq Et</button>
-            </form>
-        </div>
+                <div class="btn-group">
+                    <a href="https://maps.app.goo.gl/dsJuvUECAsK6DVbp9" target="_blank" class="btn">Google Maps</a>
+                    <a href="https://ul.waze.com/ul?venue_id=32702868.326766537.12365347&overview=yes&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location" target="_blank" class="btn btn-outline">Waze Naviqasiya</a>
+                </div>
+            </div>
 
-        <!-- ÜRƏK SÖZLƏRİ BÖLMƏSİ -->
-        <div class="section">
-            <div class="section-title">Ürək Sözləriniz</div>
-            <form id="wishForm">
-                <input type="text" id="guestName" placeholder="Adınız və Soyadınız" required>
-                <textarea id="guestWish" rows="3" placeholder="Təbrikinizi və xoş arzularınızı bura yaza bilərsiniz..." required></textarea>
-                <button type="submit" class="btn btn-outline" style="width: 100%; margin-top: 5px;">Təbriki Göndər</button>
-            </form>
+            <!-- RSVP (GƏLİŞİN TƏSDİQİ) -->
+            <div class="section">
+                <div class="section-title">İştirak Təsdiqi (RSVP)</div>
+                <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">Lütfən oktyabr ayına qədər iştirak edib-etməyəcəyinizi bildirin.</p>
+                
+                <form id="rsvpForm">
+                    <div class="rsvp-options">
+                        <button type="button" class="rsvp-btn active" onclick="selectAttendance('Gələcəyəm', this)">✓ Gələcəyəm</button>
+                        <button type="button" class="rsvp-btn" onclick="selectAttendance('Gələ bilməyəcəyəm', this)">✕ Gələ bilməyəcəyəm</button>
+                    </div>
+                    <input type="hidden" id="attendanceStatus" value="Gələcəyəm">
+                    
+                    <input type="text" id="rsvpName" placeholder="Adınız və Soyadınız" required>
+                    <select id="guestCount" required>
+                        <option value="" disabled selected>Qonaq sayısı (özünüz daxil)</option>
+                        <option value="1 nəfər">1 nəfər</option>
+                        <option value="2 nəfər">2 nəfər</option>
+                        <option value="3 nəfər">3 nəfər</option>
+                        <option value="4+ nəfər">4 və ya daha çox</option>
+                    </select>
+                    <button type="submit" class="btn" style="width: 100%; margin-top: 10px;">Təsdiq Et</button>
+                </form>
+            </div>
 
-            <div class="wishes-list" id="wishesList"></div>
+            <!-- ÜRƏK SÖZLƏRİ BÖLMƏSİ -->
+            <div class="section">
+                <div class="section-title">Ürək Sözləriniz</div>
+                <form id="wishForm">
+                    <input type="text" id="guestName" placeholder="Adınız və Soyadınız" required>
+                    <textarea id="guestWish" rows="3" placeholder="Təbrikinizi və xoş arzularınızı bura yaza bilərsiniz..." required></textarea>
+                    <button type="submit" class="btn btn-outline" style="width: 100%; margin-top: 5px;">Təbriki Göndər</button>
+                </form>
+
+                <div class="wishes-list" id="wishesList"></div>
+            </div>
         </div>
     </div>
 
@@ -446,9 +497,17 @@
             var card = document.getElementById('main-card');
             var music = document.getElementById('bg-music');
 
-            music.play().catch(function(error) {
-                console.log("Musiqi səsləndirilə bilmədi:", error);
-            });
+            if (music) {
+                music.currentTime = 0;
+                var playPromise = music.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(function() {
+                        console.log("Musiqi çalınır");
+                    }).catch(function(error) {
+                        console.log("Brauzer musiqiyə engel oldu:", error);
+                    });
+                }
+            }
 
             screen.style.opacity = '0';
             setTimeout(function() {
@@ -483,7 +542,6 @@
             }
         }, 1000);
 
-        // RSVP Seçimi
         function selectAttendance(status, btn) {
             document.getElementById('attendanceStatus').value = status;
             var buttons = document.querySelectorAll('.rsvp-btn');
@@ -491,7 +549,6 @@
             btn.classList.add('active');
         }
 
-        // RSVP Göndərilməsi
         document.getElementById('rsvpForm').addEventListener('submit', function(e) {
             e.preventDefault();
             var status = document.getElementById('attendanceStatus').value;
@@ -505,7 +562,6 @@
             window.open(url, '_blank');
         });
 
-        // Ürək Sözləri Formu
         document.getElementById('wishForm').addEventListener('submit', function(e) {
             e.preventDefault();
             var name = document.getElementById('guestName').value;
