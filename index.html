@@ -750,7 +750,7 @@
             btn.classList.add('active');
         }
 
-        // Form Göndərişi
+        // Form Göndərişi - WHATSAPP QRUPUNA YÖNLƏNDİRMƏ
         document.getElementById('combinedForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -767,14 +767,21 @@
                 wishesList.prepend(newWish);
             }
 
-            var phone = "994705612656";
+            // QRUP LINKI VƏ MESAJIN FORMATLANMASI
+            var groupLink = "https://chat.whatsapp.com/IIOe0PesVy5AcWL8YMZsdf"; 
+            
             var text = "Salam! Mən " + name + ".\nToyda " + status + ".\nQonaq sayı: " + count + ".";
             if (wish !== "") {
                 text += "\nÜrək sözlərim: " + wish;
             }
 
-            var url = "https://wa.me/" + phone + "?text=" + encodeURIComponent(text);
-            window.open(url, '_blank');
+            // Mesajı kopyalayır və qrupa yönləndirir
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text);
+                alert("Cavabınız hazırlandı! Açılan WhatsApp qrupuna yapışdırıb (Paste) daxil edin.");
+            }
+            
+            window.open(groupLink, '_blank');
 
             document.getElementById('guestWish').value = '';
         });
