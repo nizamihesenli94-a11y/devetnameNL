@@ -34,7 +34,7 @@
             overflow-x: hidden;
         }
 
-        /* ZƏRF EKRANI (AXAN ANİMASİYA İLƏ) */
+        /* ZƏRF EKRANI */
         #envelope-screen {
             position: fixed;
             top: 0;
@@ -47,20 +47,13 @@
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease;
-        }
-
-        #envelope-screen.open-animation {
-            transform: translateY(100%);
-            opacity: 0;
-            pointer-events: none;
         }
 
         .envelope {
-            width: 290px;
+            width: 280px;
             height: 200px;
             background-color: var(--envelope-bg);
-            border-radius: 8px;
+            border-radius: 6px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.08);
             position: relative;
             display: flex;
@@ -83,27 +76,25 @@
             box-shadow: 0 6px 15px rgba(197, 160, 89, 0.4);
             cursor: pointer;
             border: 2px solid #ffffff;
-            transition: transform 0.3s ease;
+            transition: transform 0.2s ease;
         }
 
-        .seal-btn:hover {
-            transform: scale(1.05);
+        .seal-btn:active {
+            transform: scale(0.95);
         }
 
         .tap-text {
             margin-top: 25px;
-            font-size: 12px;
+            font-size: 13px;
             color: var(--gold-primary);
             letter-spacing: 2px;
             text-transform: uppercase;
             font-weight: 500;
         }
 
-        /* ƏSAS DƏVƏTNAMƏ KARTOCASI */
+        /* ƏSAS KART */
         #main-card {
             display: none;
-            opacity: 0;
-            transform: scale(0.95);
             width: 100%;
             max-width: 500px;
             background: var(--card-bg);
@@ -113,41 +104,12 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.05);
             text-align: center;
             border: 1px solid var(--border-color);
-            transition: opacity 1s ease 0.3s, transform 1s ease 0.3s;
-        }
-
-        #main-card.show-card {
-            display: block;
-            opacity: 1;
-            transform: scale(1);
         }
 
         .card-inner-border {
-            border: 1px solid rgba(197, 160, 89, 0.35);
-            padding: 25px 15px;
+            border: 1px solid rgba(197, 160, 89, 0.3);
+            padding: 20px 10px;
             border-radius: 4px;
-            position: relative;
-            background: radial-gradient(circle, rgba(255,255,255,1) 60%, rgba(247,244,239,0.4) 100%);
-        }
-
-        /* NAXIŞ XƏTLƏRİ (DIVIDER) */
-        .divider-line {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 15px 0;
-        }
-
-        .divider-line::before, .divider-line::after {
-            content: '';
-            flex: 1;
-            border-bottom: 1px solid rgba(197, 160, 89, 0.3);
-            margin: 0 10px;
-        }
-
-        .divider-line span {
-            color: var(--gold-primary);
-            font-size: 12px;
         }
 
         .header-date {
@@ -155,6 +117,7 @@
             letter-spacing: 4px;
             color: var(--gold-primary);
             font-weight: 600;
+            margin-bottom: 8px;
         }
 
         .sub-title {
@@ -163,20 +126,20 @@
             text-transform: uppercase;
             color: var(--gold-primary);
             font-weight: 600;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
         }
 
         .names-wrapper {
-            margin: 15px 0;
-            padding: 15px;
+            margin: 15px 0 25px 0;
+            padding: 12px;
             border-top: 1px dashed rgba(197, 160, 89, 0.4);
             border-bottom: 1px dashed rgba(197, 160, 89, 0.4);
-            background: rgba(247, 244, 239, 0.6);
+            background: rgba(247, 244, 239, 0.5);
         }
 
         .names {
             font-family: 'Playfair Display', serif;
-            font-size: 32px;
+            font-size: 30px;
             font-weight: 600;
             color: var(--gold-primary);
             font-style: italic;
@@ -192,14 +155,14 @@
 
         .description {
             font-size: 13px;
-            line-height: 1.7;
+            line-height: 1.6;
             color: var(--text-muted);
-            margin: 15px 0;
+            margin-bottom: 25px;
         }
 
         .section {
-            margin: 25px 0;
-            padding-top: 20px;
+            margin: 30px 0;
+            padding-top: 25px;
             border-top: 1px solid var(--border-color);
         }
 
@@ -211,10 +174,9 @@
             font-weight: 600;
         }
 
-        /* GEYİM KODU */
         .dress-code-container {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             justify-content: center;
         }
 
@@ -223,7 +185,7 @@
             background: var(--bg-color);
             padding: 12px 8px;
             border-radius: 6px;
-            border: 1px dashed rgba(197, 160, 89, 0.5);
+            border: 1px solid var(--border-color);
         }
 
         .dress-card h4 {
@@ -238,36 +200,6 @@
             color: var(--text-dark);
         }
 
-        /* TOY PROQRAMI BÖLMƏSİ */
-        .program-list {
-            text-align: left;
-            max-width: 300px;
-            margin: 0 auto;
-        }
-
-        .program-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 12px;
-            position: relative;
-        }
-
-        .program-time {
-            font-weight: 600;
-            color: var(--gold-primary);
-            font-size: 13px;
-            width: 65px;
-            border-right: 2px solid var(--gold-primary);
-            padding-right: 10px;
-        }
-
-        .program-desc {
-            font-size: 13px;
-            color: var(--text-dark);
-            padding-left: 12px;
-        }
-
-        /* GERİSAYIM */
         .countdown {
             display: flex;
             justify-content: center;
@@ -401,13 +333,9 @@
             <div class="header-date">10.10.2026</div>
             <div class="sub-title">Xoş gəldiniz</div>
             
-            <div class="divider-line"><span>✦</span></div>
-
             <div class="names-wrapper">
                 <div class="names">Nizami <span>&</span> Lətifə</div>
             </div>
-
-            <div class="divider-line"><span>✦</span></div>
 
             <p class="description">
                 Həyatımızın ən xüsusi gününü siz dəyərli doğmalarımızla bölüşməkdən hüdudsuz xoşbəxtlik duyarıq.
@@ -421,33 +349,6 @@
                     <div class="time-box"><span id="hours">00</span><label>Saat</label></div>
                     <div class="time-box"><span id="minutes">00</span><label>Dəqiqə</label></div>
                     <div class="time-box"><span id="seconds">00</span><label>Saniyə</label></div>
-                </div>
-            </div>
-
-            <!-- TOY PROQRAMI -->
-            <div class="section">
-                <div class="section-title">Toy Proqramı</div>
-                <div class="program-list">
-                    <div class="program-item">
-                        <div class="program-time">18:00</div>
-                        <div class="program-desc">Qonaqların qarşılanması</div>
-                    </div>
-                    <div class="program-item">
-                        <div class="program-time">19:00</div>
-                        <div class="program-desc">Bəy və Gəlinin gəlişi</div>
-                    </div>
-                    <div class="program-item">
-                        <div class="program-time">20:00</div>
-                        <div class="program-desc">Şam yeməyi və Təbriklər</div>
-                    </div>
-                    <div class="program-item">
-                        <div class="program-time">22:00</div>
-                        <div class="program-desc">Tort kəsilməsi mərasimi</div>
-                    </div>
-                    <div class="program-item">
-                        <div class="program-time">23:00</div>
-                        <div class="program-desc">Şou proqramı və Yekun</div>
-                    </div>
                 </div>
             </div>
 
@@ -516,29 +417,19 @@
             var card = document.getElementById('main-card');
             var music = document.getElementById('bg-music');
 
-            // Musiqini oxut
+            // Musiqini oynat
             if (music) {
                 music.play().catch(function(err) {
-                    console.log("Musiqi avtomatik başladıla bilmədi:", err);
+                    console.log("Musiqi dəstəklənmədi və ya fayl tapılmadı:", err);
                 });
             }
 
-            // Kartı görünən et
+            // Zərfi anında gizlət, kartı göstər
+            screen.style.display = 'none';
             card.style.display = 'block';
-
-            // AXAN ANİMASİYA: Zərf sürüşərək itir, Kart yumşaq animasiya ilə gəlir
-            setTimeout(function() {
-                screen.classList.add('open-animation');
-                card.classList.add('show-card');
-            }, 50);
-
-            // Animasiya bitdikdən sonra zərf elementini ekrandan tam yığışdır
-            setTimeout(function() {
-                screen.style.display = 'none';
-            }, 1000);
         }
 
-        // Gerisayım (10 Oktyabr 2026)
+        // Gerisayım
         var weddingDate = new Date("Oct 10, 2026 18:00:00").getTime();
 
         setInterval(function() {
