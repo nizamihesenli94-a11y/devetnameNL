@@ -4,20 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toy Dəvətnaməsi — Nizami & Lətifə</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #f7f4ef;
-            --card-bg: #ffffff;
-            --envelope-bg: #f2ebd9;
-            --envelope-flap: #e6dcbe;
-            --gold-primary: #c5a059;
-            --gold-hover: #b08b46;
-            --ribbon-color: #d4af37;
-            --ribbon-shadow: #997819;
-            --text-dark: #333333;
-            --text-muted: #777777;
-            --border-color: #e8e2d5;
+            --bg-color: #fcfbfa;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --gold-gradient: linear-gradient(135deg, #bf953f 0%, #fcf6ba 25%, #b38728 50%, #fbf5b7 75%, #aa771c 100%);
+            --gold-solid: #c5a059;
+            --gold-light: #dfc897;
+            --text-main: #2c2c2c;
+            --text-muted: #757575;
+            --border-gold: rgba(197, 160, 89, 0.3);
         }
 
         * {
@@ -29,7 +26,7 @@
         body {
             background-color: var(--bg-color);
             font-family: 'Montserrat', sans-serif;
-            color: var(--text-dark);
+            color: var(--text-main);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -38,7 +35,7 @@
             position: relative;
         }
 
-        /* ULDUZLAR ANİMASİYASI */
+        /* ULDUZ VƏ PARILTI ANİMASİYASI */
         #stars-container {
             position: fixed;
             top: 0;
@@ -52,76 +49,73 @@
 
         .star {
             position: absolute;
-            background-color: var(--gold-primary);
-            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            background: radial-gradient(circle, #fff 10%, #c5a059 80%);
+            border-radius: 50%;
             opacity: 0;
-            animation: fallAndTwinkle linear infinite;
+            animation: twinkleFall linear infinite;
+            filter: drop-shadow(0 0 4px #c5a059);
         }
 
-        @keyframes fallAndTwinkle {
-            0% { transform: translateY(-20px) rotate(0deg) scale(0.3); opacity: 0; }
-            20% { opacity: 0.8; }
-            80% { opacity: 0.8; }
-            100% { transform: translateY(105vh) rotate(180deg) scale(0.8); opacity: 0; }
+        @keyframes twinkleFall {
+            0% { transform: translateY(-10px) scale(0.4); opacity: 0; }
+            30% { opacity: 0.9; }
+            70% { opacity: 0.9; }
+            100% { transform: translateY(105vh) scale(1); opacity: 0; }
         }
 
-        /* TAM EKRAN LENTLİ ZƏRF EKRANI */
+        /* LUX EKRAN ZƏRFİ */
         #envelope-screen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background-color: var(--envelope-bg);
+            background: #f4eee2;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            transition: opacity 1.2s ease, visibility 1.2s ease;
-            box-shadow: inset 0 0 100px rgba(197, 160, 89, 0.15);
+            transition: opacity 1.2s cubic-bezier(0.77, 0, 0.175, 1), visibility 1.2s;
+            box-shadow: inset 0 0 120px rgba(197, 160, 89, 0.2);
         }
 
-        /* KƏNAR ÇƏRÇİVƏ ZƏRİFLİYİ */
-        .envelope-border {
+        .envelope-frame {
             position: absolute;
-            top: 20px;
-            left: 20px;
-            right: 20px;
-            bottom: 20px;
-            border: 2px solid rgba(197, 160, 89, 0.3);
+            inset: 15px;
+            border: 1px solid var(--border-gold);
             pointer-events: none;
         }
 
-        /* QIZILI ATLAS LENTLƏR */
-        .ribbon-vertical {
+        /* ATLAS LENTLƏR */
+        .ribbon-v {
             position: absolute;
             top: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 45px;
+            width: 40px;
             height: 100%;
-            background: linear-gradient(90deg, var(--ribbon-shadow) 0%, var(--ribbon-color) 30%, #fff 50%, var(--ribbon-color) 70%, var(--ribbon-shadow) 100%);
-            box-shadow: 0 0 15px rgba(0,0,0,0.15);
+            background: linear-gradient(90deg, #aa7820 0%, #e0c27b 25%, #fff7d6 50%, #e0c27b 75%, #aa7820 100%);
+            box-shadow: 0 0 20px rgba(0,0,0,0.12);
             z-index: 2;
-            transition: transform 1s ease, opacity 1s ease;
+            transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s;
         }
 
-        .ribbon-horizontal {
+        .ribbon-h {
             position: absolute;
             top: 50%;
             left: 0;
             transform: translateY(-50%);
             width: 100%;
-            height: 45px;
-            background: linear-gradient(180deg, var(--ribbon-shadow) 0%, var(--ribbon-color) 30%, #fff 50%, var(--ribbon-color) 70%, var(--ribbon-shadow) 100%);
-            box-shadow: 0 0 15px rgba(0,0,0,0.15);
+            height: 40px;
+            background: linear-gradient(180deg, #aa7820 0%, #e0c27b 25%, #fff7d6 50%, #e0c27b 75%, #aa7820 100%);
+            box-shadow: 0 0 20px rgba(0,0,0,0.12);
             z-index: 2;
-            transition: transform 1s ease, opacity 1s ease;
+            transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.8s;
         }
 
-        /* LENT DÜYÜNÜ VƏ MÖHÜR */
-        .seal-wrapper {
+        /* ŞAM MÖHÜR (WAX SEAL) */
+        .seal-container {
             position: relative;
             z-index: 5;
             display: flex;
@@ -130,254 +124,268 @@
             cursor: pointer;
         }
 
-        .bow-knot {
-            position: absolute;
-            width: 140px;
-            height: 140px;
-            pointer-events: none;
-            z-index: 4;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
-
-        /* MÖHÜR DÜYMƏSİ */
-        .seal-btn {
-            width: 90px;
-            height: 90px;
-            background: radial-gradient(circle, #e5c158 0%, #a87913 100%);
+        .seal-disc {
+            width: 85px;
+            height: 85px;
+            background: var(--gold-gradient);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: #ffffff;
-            font-size: 20px;
-            font-weight: bold;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3), inset 0 0 10px rgba(255,255,255,0.5);
-            border: 3px solid #ffffff;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            z-index: 6;
-        }
-
-        .seal-btn:hover {
-            transform: scale(1.08);
-            box-shadow: 0 15px 30px rgba(197, 160, 89, 0.5), inset 0 0 12px rgba(255,255,255,0.8);
-        }
-
-        .tap-text {
-            margin-top: 25px;
-            font-size: 13px;
-            color: var(--gold-primary);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            font-weight: 600;
-            background: rgba(255, 255, 255, 0.8);
-            padding: 8px 16px;
-            border-radius: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            z-index: 6;
-        }
-
-        /* AÇILIŞ ANİMASİYASI */
-        #envelope-screen.opened {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        #envelope-screen.opened .ribbon-vertical {
-            transform: translateX(-50%) scaleY(0);
-            opacity: 0;
-        }
-
-        #envelope-screen.opened .ribbon-horizontal {
-            transform: translateY(-50%) scaleX(0);
-            opacity: 0;
-        }
-
-        #envelope-screen.opened .seal-wrapper {
-            transform: scale(1.5);
-            opacity: 0;
-            transition: transform 0.8s ease, opacity 0.8s ease;
-        }
-
-        /* ƏSAS KART */
-        #main-card {
-            display: none;
-            opacity: 0;
-            transform: translateY(40px) scale(0.96);
-            width: 100%;
-            max-width: 500px;
-            background: var(--card-bg);
-            padding: 40px 25px;
-            margin: 20px;
-            border-radius: 12px;
-            box-shadow: 0 15px 45px rgba(197, 160, 89, 0.12), 0 5px 20px rgba(0,0,0,0.05);
-            text-align: center;
-            border: 1px solid var(--border-color);
-            transition: opacity 1s ease 0.3s, transform 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
-            z-index: 10;
+            box-shadow: 0 12px 30px rgba(160, 115, 30, 0.4), inset 0 0 8px rgba(255,255,255,0.8);
+            border: 2px solid #ffffff;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
             position: relative;
             overflow: hidden;
         }
 
-        #main-card.show-card { display: block; opacity: 1; transform: translateY(0) scale(1); }
-
-        .leaf-decoration {
+        .seal-disc::after {
+            content: '';
             position: absolute;
-            width: 110px;
-            height: 110px;
-            pointer-events: none;
-            opacity: 0.7;
-            filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.12));
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.6), transparent);
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
         }
 
-        .leaf-top-left { top: -10px; left: -10px; }
-        .leaf-bottom-right { bottom: -10px; right: -10px; transform: rotate(180deg); }
+        @keyframes shimmer {
+            0% { transform: translateY(-100%) rotate(45deg); }
+            100% { transform: translateY(100%) rotate(45deg); }
+        }
 
-        .card-inner-border {
-            border: 1px solid rgba(197, 160, 89, 0.35);
-            padding: 25px 12px;
-            border-radius: 8px;
+        .seal-disc:hover {
+            transform: scale(1.08);
+            box-shadow: 0 18px 36px rgba(160, 115, 30, 0.5);
+        }
+
+        .seal-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 26px;
+            font-weight: 600;
+            color: #4a3306;
+            letter-spacing: 2px;
+            z-index: 2;
+        }
+
+        .tap-notice {
+            margin-top: 25px;
+            font-size: 11px;
+            color: #6e521c;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(5px);
+            padding: 8px 18px;
+            border-radius: 30px;
+            border: 1px solid var(--border-gold);
+            z-index: 6;
+        }
+
+        #envelope-screen.opened { opacity: 0; visibility: hidden; }
+        #envelope-screen.opened .ribbon-v { transform: translateX(-50%) scaleY(0); opacity: 0; }
+        #envelope-screen.opened .ribbon-h { transform: translateY(-50%) scaleX(0); opacity: 0; }
+        #envelope-screen.opened .seal-container { transform: scale(1.3); opacity: 0; }
+
+        /* ƏSAS DƏVƏTNAMƏ KART */
+        #main-card {
+            display: none;
+            opacity: 0;
+            transform: translateY(30px) scale(0.98);
+            width: 100%;
+            max-width: 480px;
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            padding: 45px 30px;
+            margin: 20px;
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(197, 160, 89, 0.15), 0 2px 10px rgba(0,0,0,0.02);
+            text-align: center;
+            border: 1px solid rgba(197, 160, 89, 0.25);
+            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 10;
             position: relative;
-            background: rgba(255, 255, 255, 0.85);
-            box-shadow: inset 0 0 15px rgba(197, 160, 89, 0.03);
+        }
+
+        #main-card.show-card { display: block; opacity: 1; transform: translateY(0) scale(1); }
+
+        .card-frame {
+            border: 1px solid var(--border-gold);
+            padding: 30px 15px;
+            border-radius: 10px;
+            position: relative;
         }
 
         .header-date {
-            font-size: 18px;
-            letter-spacing: 4px;
-            color: var(--gold-primary);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px;
+            letter-spacing: 5px;
+            color: var(--gold-solid);
             font-weight: 600;
-            margin-bottom: 8px;
         }
 
         .sub-title {
-            font-size: 11px;
-            letter-spacing: 3px;
+            font-size: 10px;
+            letter-spacing: 4px;
             text-transform: uppercase;
-            color: var(--gold-primary);
-            font-weight: 600;
-            margin-bottom: 12px;
+            color: var(--text-muted);
+            margin-top: 5px;
+            margin-bottom: 20px;
         }
 
-        .names-wrapper {
-            margin: 15px 0 25px 0;
-            padding: 14px;
-            border-top: 1px dashed rgba(197, 160, 89, 0.4);
-            border-bottom: 1px dashed rgba(197, 160, 89, 0.4);
-            background: rgba(247, 244, 239, 0.6);
-            border-radius: 4px;
+        .names-area {
+            margin: 20px 0;
+            padding: 15px 0;
+            border-top: 1px solid var(--border-gold);
+            border-bottom: 1px solid var(--border-gold);
         }
 
         .names {
-            font-family: 'Playfair Display', serif;
-            font-size: 30px;
-            font-weight: 600;
-            color: var(--gold-primary);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 38px;
+            font-weight: 400;
+            color: #222;
             font-style: italic;
+            line-height: 1.2;
         }
 
-        .names span { display: inline-block; font-style: normal; font-size: 22px; margin: 0 8px; color: var(--text-dark); }
+        .names span {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            font-style: normal;
+            color: var(--gold-solid);
+            margin: 0 10px;
+            vertical-align: middle;
+        }
 
-        .description { font-size: 13px; line-height: 1.6; color: var(--text-muted); margin-bottom: 25px; }
+        .description {
+            font-size: 12px;
+            line-height: 1.8;
+            color: #555;
+            margin: 20px 0;
+            font-weight: 300;
+        }
 
-        .section { margin: 30px 0; padding-top: 25px; border-top: 1px solid var(--border-color); }
-        .section-title { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--gold-primary); margin-bottom: 15px; font-weight: 600; }
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold-solid), transparent);
+            margin: 30px auto;
+            width: 60%;
+            opacity: 0.4;
+        }
 
-        .countdown { display: flex; justify-content: center; gap: 12px; margin-top: 10px; }
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            color: var(--gold-solid);
+            margin-bottom: 15px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        /* GERYƏ SAYIM (COUNTDOWN) */
+        .countdown { display: flex; justify-content: center; gap: 15px; }
         .time-box {
-            background: #ffffff;
-            width: 65px;
-            height: 65px;
+            background: #fff;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            border: 1.5px solid var(--gold-primary);
-            box-shadow: 0 4px 10px rgba(197, 160, 89, 0.15);
+            border: 1px solid var(--gold-light);
+            box-shadow: 0 4px 12px rgba(197, 160, 89, 0.08);
         }
-        .time-box span { display: block; font-size: 16px; font-weight: 600; color: var(--gold-primary); line-height: 1.1; }
-        .time-box label { font-size: 8px; color: var(--text-muted); text-transform: uppercase; margin-top: 2px; letter-spacing: 0.5px; }
+        .time-box span { font-size: 15px; font-weight: 500; color: var(--gold-solid); }
+        .time-box label { font-size: 7px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
 
-        .scroll-hint {
-            margin-top: 25px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: var(--gold-primary);
-            font-size: 11px;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            font-weight: 500;
-            animation: pulseFade 1.8s infinite;
-        }
-
-        .scroll-arrow { font-size: 16px; margin-top: 3px; animation: bounce 1.5s infinite; }
-        @keyframes pulseFade { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
-        @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(5px); } 60% { transform: translateY(3px); } }
-        .scroll-hint.hidden { opacity: 0; pointer-events: none; }
-
-        .program-list { text-align: left; max-width: 310px; margin: 0 auto; }
+        /* TOY PROQRAMI */
+        .program-list { text-align: left; max-width: 290px; margin: 0 auto; }
         .program-item {
             display: flex;
             align-items: center;
             margin-bottom: 12px;
-            background: rgba(247, 244, 239, 0.4);
-            padding: 8px 10px;
+            padding: 8px 12px;
+            background: rgba(247, 244, 239, 0.5);
             border-radius: 6px;
+            border-left: 2px solid var(--gold-solid);
         }
-        .program-time { font-weight: 600; color: var(--gold-primary); font-size: 13px; width: 65px; border-right: 2px solid var(--gold-primary); padding-right: 10px; }
-        .program-desc { font-size: 13px; color: var(--text-dark); padding-left: 12px; }
+        .program-time { font-size: 12px; font-weight: 500; color: var(--gold-solid); width: 55px; }
+        .program-desc { font-size: 12px; color: var(--text-main); }
 
-        .dress-code-container { display: flex; gap: 10px; justify-content: center; }
-        .dress-card { flex: 1; background: var(--bg-color); padding: 14px 8px; border-radius: 8px; border: 1px solid var(--border-color); }
-        .dress-card h4 { font-size: 11px; text-transform: uppercase; color: var(--gold-primary); margin-bottom: 4px; }
-        .dress-card p { font-size: 12px; color: var(--text-dark); }
+        /* GEYİM KODU */
+        .dress-code { display: flex; gap: 12px; }
+        .dress-item {
+            flex: 1;
+            background: rgba(247, 244, 239, 0.4);
+            padding: 12px 6px;
+            border-radius: 6px;
+            border: 1px solid rgba(197, 160, 89, 0.15);
+        }
+        .dress-item h4 { font-size: 10px; text-transform: uppercase; color: var(--gold-solid); letter-spacing: 1px; }
+        .dress-item p { font-size: 11px; color: #444; margin-top: 3px; }
 
-        .btn-group { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 15px; }
+        /* DÜYMƏLƏR */
+        .btn-group { display: flex; justify-content: center; gap: 10px; margin-top: 15px; }
         .btn {
-            display: inline-block;
-            background-color: var(--gold-primary);
-            color: white;
-            padding: 10px 18px;
+            background: var(--gold-solid);
+            color: #fff;
+            padding: 10px 20px;
             text-decoration: none;
-            border-radius: 4px;
-            font-size: 12px;
+            border-radius: 25px;
+            font-size: 11px;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
             border: none;
             cursor: pointer;
-            font-weight: 500;
-            box-shadow: 0 4px 10px rgba(197, 160, 89, 0.3);
-            transition: background 0.2s;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(197, 160, 89, 0.25);
         }
-        .btn:hover { background-color: var(--gold-hover); }
-        .btn-outline { background-color: transparent; color: var(--gold-primary); border: 1px solid var(--gold-primary); box-shadow: none; }
+        .btn:hover { background: #b08b46; transform: translateY(-1px); }
+        .btn-outline { background: transparent; color: var(--gold-solid); border: 1px solid var(--gold-solid); box-shadow: none; }
 
-        .rsvp-options { display: flex; justify-content: center; gap: 10px; margin-bottom: 12px; }
-        .rsvp-btn { flex: 1; padding: 10px; border: 1px solid var(--border-color); background: var(--bg-color); color: var(--text-dark); border-radius: 4px; cursor: pointer; font-size: 12px; }
-        .rsvp-btn.active { background: var(--gold-primary); color: white; border-color: var(--gold-primary); box-shadow: 0 3px 8px rgba(197, 160, 89, 0.3); }
+        /* RSVP FORM */
+        .rsvp-options { display: flex; gap: 10px; margin-bottom: 12px; }
+        .rsvp-btn {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid var(--border-gold);
+            background: #fff;
+            color: var(--text-main);
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 11px;
+            transition: all 0.3s ease;
+        }
+        .rsvp-btn.active { background: var(--gold-solid); color: #fff; border-color: var(--gold-solid); }
 
         input, select, textarea {
             width: 100%;
-            padding: 10px;
-            margin: 5px 0;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            font-size: 13px;
-            background-color: #fafafa;
+            padding: 11px;
+            margin: 6px 0;
+            border: 1px solid rgba(197, 160, 89, 0.2);
+            border-radius: 6px;
+            font-size: 12px;
+            background: rgba(255, 255, 255, 0.8);
+            font-family: 'Montserrat', sans-serif;
+            outline: none;
+            transition: border 0.3s;
         }
+        input:focus, select:focus, textarea:focus { border-color: var(--gold-solid); }
 
         .success-msg {
             display: none;
-            background: #e8f5e9;
-            color: #2e7d32;
+            background: #f0f7f4;
+            color: #2d6a4f;
             padding: 15px;
-            border-radius: 6px;
-            font-size: 13px;
+            border-radius: 8px;
+            font-size: 12px;
             margin-top: 15px;
-            border: 1px solid #c8e6c9;
+            border: 1px solid #b7e4c7;
         }
     </style>
 </head>
@@ -389,45 +397,27 @@
 
     <div id="stars-container"></div>
 
-    <!-- TAM EKRAN LENTLİ ZƏRF EKRANI -->
+    <!-- ZƏRF EKRANI -->
     <div id="envelope-screen">
-        <div class="envelope-border"></div>
-        <div class="ribbon-vertical"></div>
-        <div class="ribbon-horizontal"></div>
+        <div class="envelope-frame"></div>
+        <div class="ribbon-v"></div>
+        <div class="ribbon-h"></div>
 
-        <div class="seal-wrapper" onclick="openInvitation()">
-            <!-- SVG LENT DÜYÜNÜ -->
-            <svg class="bow-knot" viewBox="0 0 100 100">
-                <path d="M 50 50 C 20 20, 10 40, 50 50 C 20 60, 10 80, 50 50 C 80 20, 90 40, 50 50 C 80 60, 90 80, 50 50" fill="#d4af37" stroke="#997819" stroke-width="2"/>
-            </svg>
-            <div class="seal-btn">N & L</div>
-            <div class="tap-text">Dəvətnaməni açmaq üçün daxil olun</div>
+        <div class="seal-container" onclick="openInvitation()">
+            <div class="seal-disc">
+                <span class="seal-text">N&L</span>
+            </div>
+            <div class="tap-notice">Dəvətnaməni açmaq üçün daxil olun</div>
         </div>
     </div>
 
-    <!-- ƏSAS DƏVƏTNAMƏ KART -->
+    <!-- ƏSAS KART -->
     <div id="main-card">
-        <svg class="leaf-decoration leaf-top-left" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10 10 Q 50 10, 80 50 Q 50 40, 10 10 Z" fill="#c5a059" opacity="0.4"/>
-            <path d="M10 10 Q 10 50, 50 80 Q 40 50, 10 10 Z" fill="#b08b46" opacity="0.3"/>
-            <path d="M10 10 Q 60 30, 90 20 Q 50 60, 10 10 Z" fill="#d4af37" opacity="0.25"/>
-            <circle cx="25" cy="40" r="3" fill="#c5a059" opacity="0.5"/>
-            <circle cx="40" cy="25" r="2" fill="#c5a059" opacity="0.5"/>
-        </svg>
-
-        <svg class="leaf-decoration leaf-bottom-right" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10 10 Q 50 10, 80 50 Q 50 40, 10 10 Z" fill="#c5a059" opacity="0.4"/>
-            <path d="M10 10 Q 10 50, 50 80 Q 40 50, 10 10 Z" fill="#b08b46" opacity="0.3"/>
-            <path d="M10 10 Q 60 30, 90 20 Q 50 60, 10 10 Z" fill="#d4af37" opacity="0.25"/>
-            <circle cx="25" cy="40" r="3" fill="#c5a059" opacity="0.5"/>
-            <circle cx="40" cy="25" r="2" fill="#c5a059" opacity="0.5"/>
-        </svg>
-
-        <div class="card-inner-border">
-            <div class="header-date">10.10.2026</div>
+        <div class="card-frame">
+            <div class="header-date">10 . 10 . 2026</div>
             <div class="sub-title">Xoş gəldiniz</div>
             
-            <div class="names-wrapper">
+            <div class="names-area">
                 <div class="names">Nizami <span>&</span> Lətifə</div>
             </div>
 
@@ -435,100 +425,95 @@
                 Həyatımızın ən xüsusi gününü siz dəyərli doğmalarımızla bölüşməkdən hüdudsuz xoşbəxtlik duyarıq.
             </p>
 
-            <div class="section">
-                <div class="sub-title">Toya qalan vaxt</div>
-                <div class="countdown">
-                    <div class="time-box"><span id="days">00</span><label>Gün</label></div>
-                    <div class="time-box"><span id="hours">00</span><label>Saat</label></div>
-                    <div class="time-box"><span id="minutes">00</span><label>Dəqiqə</label></div>
-                    <div class="time-box"><span id="seconds">00</span><label>Saniyə</label></div>
-                </div>
+            <div class="section-divider"></div>
 
-                <div class="scroll-hint" id="scrollHint">
-                    <span>Davamı üçün aşağıya baxın</span>
-                    <span class="scroll-arrow">↓</span>
+            <div class="section-title">Toya qalan vaxt</div>
+            <div class="countdown">
+                <div class="time-box"><span id="days">00</span><label>Gün</label></div>
+                <div class="time-box"><span id="hours">00</span><label>Saat</label></div>
+                <div class="time-box"><span id="minutes">00</span><label>Dəqiqə</label></div>
+                <div class="time-box"><span id="seconds">00</span><label>Saniyə</label></div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <div class="section-title">Toy Proqramı</div>
+            <div class="program-list">
+                <div class="program-item">
+                    <div class="program-time">18:00</div>
+                    <div class="program-desc">Qonaqların qarşılanması</div>
+                </div>
+                <div class="program-item">
+                    <div class="program-time">19:00</div>
+                    <div class="program-desc">Bəy və Gəlinin gəlişi</div>
+                </div>
+                <div class="program-item">
+                    <div class="program-time">20:00</div>
+                    <div class="program-desc">Şam yeməyi və Təbriklər</div>
+                </div>
+                <div class="program-item">
+                    <div class="program-time">22:00</div>
+                    <div class="program-desc">Tort kəsilməsi mərasimi</div>
+                </div>
+                <div class="program-item">
+                    <div class="program-time">23:00</div>
+                    <div class="program-desc">Şou proqramı və Yekun</div>
                 </div>
             </div>
 
-            <div class="section">
-                <div class="section-title">Toy Proqramı</div>
-                <div class="program-list">
-                    <div class="program-item">
-                        <div class="program-time">18:00</div>
-                        <div class="program-desc">Qonaqların qarşılanması</div>
-                    </div>
-                    <div class="program-item">
-                        <div class="program-time">19:00</div>
-                        <div class="program-desc">Bəy və Gəlinin gəlişi</div>
-                    </div>
-                    <div class="program-item">
-                        <div class="program-time">20:00</div>
-                        <div class="program-desc">Şam yeməyi və Təbriklər</div>
-                    </div>
-                    <div class="program-item">
-                        <div class="program-time">22:00</div>
-                        <div class="program-desc">Tort kəsilməsi mərasimi</div>
-                    </div>
-                    <div class="program-item">
-                        <div class="program-time">23:00</div>
-                        <div class="program-desc">Şou proqramı və Yekun</div>
-                    </div>
+            <div class="section-divider"></div>
+
+            <div class="section-title">Geyim Kodu</div>
+            <div class="dress-code">
+                <div class="dress-item">
+                    <h4>Kişilər</h4>
+                    <p>Kostyum / Smoking</p>
+                </div>
+                <div class="dress-item">
+                    <h4>Qadınlar</h4>
+                    <p>Ziyafət geyimi</p>
                 </div>
             </div>
 
-            <div class="section">
-                <div class="section-title">Geyim Kodu</div>
-                <div class="dress-code-container">
-                    <div class="dress-card">
-                        <h4>Kişilər</h4>
-                        <p>Kostyum / Smoking</p>
-                    </div>
-                    <div class="dress-card">
-                        <h4>Qadınlar</h4>
-                        <p>Ziyafət geyimi</p>
-                    </div>
-                </div>
+            <div class="section-divider"></div>
+
+            <div class="section-title">Məkan və Tarix</div>
+            <p style="font-weight: 500; font-size: 13px;">10 Oktyabr 2026, Saat 18:00</p>
+            <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">Diva Wedding Hall</p>
+            <p style="font-size: 11px; color: var(--text-muted);">Həsən Əliyev küç. 141, Bakı</p>
+            
+            <div class="btn-group">
+                <a href="https://maps.app.goo.gl/dsJuvUECAsK6DVbp9" target="_blank" class="btn">Google Maps</a>
+                <a href="https://ul.waze.com/ul?venue_id=32702868.326766537.12365347&overview=yes" target="_blank" class="btn btn-outline">Waze</a>
             </div>
 
-            <div class="section">
-                <div class="section-title">Məkan və Tarix</div>
-                <p style="font-weight: 600; font-size: 14px;">10 Oktyabr 2026, Saat 18:00</p>
-                <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">Diva Wedding Hall</p>
-                <p style="font-size: 12px; color: var(--text-muted);">Həsən Əliyev küç. 141, Bakı</p>
+            <div class="section-divider"></div>
+
+            <div class="section-title">İştirak Təsdiqi</div>
+            
+            <form id="rsvpForm">
+                <div class="rsvp-options">
+                    <button type="button" class="rsvp-btn active" onclick="selectAttendance('Gələcəyəm', this)">✓ Gələcəyəm</button>
+                    <button type="button" class="rsvp-btn" onclick="selectAttendance('Gələ bilməyəcəyəm', this)">✕ Gələ bilməyəcəyəm</button>
+                </div>
+                <input type="hidden" id="attendanceStatus" value="Gələcəyəm">
                 
-                <div class="btn-group">
-                    <a href="https://maps.app.goo.gl/dsJuvUECAsK6DVbp9" target="_blank" class="btn">Google Maps</a>
-                    <a href="https://ul.waze.com/ul?venue_id=32702868.326766537.12365347&overview=yes" target="_blank" class="btn btn-outline">Waze Naviqasiya</a>
-                </div>
-            </div>
-
-            <div class="section">
-                <div class="section-title">İştirak Təsdiqi və Təbriklər</div>
+                <input type="text" id="guestName" placeholder="Adınız və Soyadınız" required>
+                <select id="guestCount" required>
+                    <option value="" disabled selected>Qonaq sayısı (özünüz daxil)</option>
+                    <option value="1 nəfər">1 nəfər</option>
+                    <option value="2 nəfər">2 nəfər</option>
+                    <option value="3 nəfər">3 nəfər</option>
+                    <option value="4+ nəfər">4 və ya daha çox</option>
+                </select>
                 
-                <form id="rsvpForm">
-                    <div class="rsvp-options">
-                        <button type="button" class="rsvp-btn active" onclick="selectAttendance('Gələcəyəm', this)">✓ Gələcəyəm</button>
-                        <button type="button" class="rsvp-btn" onclick="selectAttendance('Gələ bilməyəcəyəm', this)">✕ Gələ bilməyəcəyəm</button>
-                    </div>
-                    <input type="hidden" id="attendanceStatus" value="Gələcəyəm">
-                    
-                    <input type="text" id="guestName" placeholder="Adınız və Soyadınız" required>
-                    <select id="guestCount" required>
-                        <option value="" disabled selected>Qonaq sayısı (özünüz daxil)</option>
-                        <option value="1 nəfər">1 nəfər</option>
-                        <option value="2 nəfər">2 nəfər</option>
-                        <option value="3 nəfər">3 nəfər</option>
-                        <option value="4+ nəfər">4 və ya daha çox</option>
-                    </select>
-                    
-                    <textarea id="guestWish" rows="3" placeholder="Təbrik və xoş arzularınız (könüllü)..."></textarea>
-                    
-                    <button type="submit" id="submitBtn" class="btn" style="width: 100%; margin-top: 8px;">Təsdiq Et və Göndər</button>
-                </form>
+                <textarea id="guestWish" rows="3" placeholder="Təbrik və xoş arzularınız (könüllü)..."></textarea>
+                
+                <button type="submit" id="submitBtn" class="btn" style="width: 100%; margin-top: 10px;">Təsdiq Et və Göndər</button>
+            </form>
 
-                <div id="successMsg" class="success-msg">
-                    ✨ Təşəkkür edirik! Cavabınız və xoş arzularınız uğurla qeydə alındı.
-                </div>
+            <div id="successMsg" class="success-msg">
+                ✨ Təşəkkür edirik! Cavabınız və xoş arzularınız uğurla qeydə alındı.
             </div>
         </div>
     </div>
@@ -552,32 +537,17 @@
             }, 400);
         }
 
-        window.addEventListener('scroll', function() {
-            var scrollHint = document.getElementById('scrollHint');
-            if (scrollHint && window.scrollY > 30) {
-                scrollHint.classList.add('hidden');
-            }
-        });
-
         function createStars() {
             var container = document.getElementById('stars-container');
-            var starCount = 25;
-
-            for (var i = 0; i < starCount; i++) {
+            for (var i = 0; i < 20; i++) {
                 var star = document.createElement('div');
                 star.className = 'star';
-                
-                var size = Math.random() * 8 + 6; 
-                var left = Math.random() * 100; 
-                var duration = Math.random() * 5 + 4; 
-                var delay = Math.random() * 5; 
-
+                var size = Math.random() * 5 + 3;
                 star.style.width = size + 'px';
                 star.style.height = size + 'px';
-                star.style.left = left + '%';
-                star.style.animationDuration = duration + 's';
-                star.style.animationDelay = delay + 's';
-
+                star.style.left = Math.random() * 100 + '%';
+                star.style.animationDuration = (Math.random() * 4 + 3) + 's';
+                star.style.animationDelay = (Math.random() * 3) + 's';
                 container.appendChild(star);
             }
         }
@@ -608,7 +578,6 @@
             btn.classList.add('active');
         }
 
-        // ALDIĞINIZ GOOGLE APPS SCRIPT LINKI INTEQRASIYA OLUNDU
         var scriptURL = "https://script.google.com/macros/s/AKfycby_6u4N2Zp_mBVNDKdstAQp0G2v-qb8wqkAkcwDKZQwb_55fMCcb3Ncy8DAJw7oPdcg/exec";
 
         document.getElementById('rsvpForm').addEventListener('submit', function(e) {
