@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toy Dəvətnaməsi — Nizami & Lətifə</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #f7f4ee;
+            --bg-color: #fdfbf7;
             --card-bg: #ffffff;
-            --envelope-color: #f0e6d2;
-            --envelope-dark: #e2d2b4;
-            --gold-gradient: linear-gradient(135deg, #bf953f 0%, #fcf6ba 25%, #b38728 50%, #fbf5b7 75%, #aa771c 100%);
+            --envelope-color: #f7f2e8;
+            --envelope-inner: #efe6d5;
+            --gold-gradient: linear-gradient(135deg, #d4af37 0%, #fff3a7 35%, #aa771c 70%, #fbf5b7 100%);
             --gold-solid: #c5a059;
-            --text-main: #2c2c2c;
-            --text-muted: #757575;
-            --border-gold: rgba(197, 160, 89, 0.35);
+            --gold-soft: rgba(197, 160, 89, 0.25);
+            --text-main: #2b2b2b;
+            --text-muted: #888888;
         }
 
         * {
@@ -36,7 +36,7 @@
             position: relative;
         }
 
-        /* ULDUZLAR */
+        /* ULDUZ VƏ PARILTI ANİMASİYASI */
         #stars-container {
             position: fixed;
             top: 0;
@@ -57,13 +57,13 @@
         }
 
         @keyframes twinkleFall {
-            0% { transform: translateY(-10px) scale(0.4); opacity: 0; }
-            30% { opacity: 0.8; }
-            70% { opacity: 0.8; }
-            100% { transform: translateY(105vh) scale(1); opacity: 0; }
+            0% { transform: translateY(-10px) scale(0.3); opacity: 0; }
+            30% { opacity: 0.7; }
+            70% { opacity: 0.7; }
+            100% { transform: translateY(105vh) scale(0.8); opacity: 0; }
         }
 
-        /* 3D ZƏRF EKRANI CONTAINER */
+        /* 3D LUX ZƏRF WRAPPER */
         #envelope-wrapper {
             position: fixed;
             top: 0;
@@ -74,9 +74,9 @@
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            perspective: 1200px;
-            background: radial-gradient(circle, #faf7f2 0%, #e8dec8 100%);
-            transition: opacity 1s ease 0.8s, visibility 1s ease 0.8s;
+            perspective: 1500px;
+            background: radial-gradient(circle, #ffffff 0%, #f4ede0 100%);
+            transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1) 0.8s, visibility 1s 0.8s;
         }
 
         #envelope-wrapper.fade-out {
@@ -84,58 +84,57 @@
             visibility: hidden;
         }
 
-        /* REAL 3D ZƏRF QUTUSU */
+        /* REAL ZƏRF QUTUSU */
         .envelope-3d {
             position: relative;
-            width: 90vw;
-            max-width: 440px;
-            height: 290px;
+            width: 88vw;
+            max-width: 420px;
+            height: 270px;
             background: var(--envelope-color);
-            border-radius: 8px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.15), 0 10px 20px rgba(197, 160, 89, 0.1);
-            border: 1px solid var(--border-gold);
+            border-radius: 12px;
+            box-shadow: 0 30px 60px rgba(197, 160, 89, 0.12), 0 10px 25px rgba(0,0,0,0.04);
+            border: 1px solid rgba(197, 160, 89, 0.3);
             display: flex;
             justify-content: center;
             align-items: center;
             transform-style: preserve-3d;
-            transition: transform 0.6s ease;
         }
 
-        /* ZƏRFİN ÇƏRÇİVƏ ZƏRİFLİYİ */
-        .envelope-inner-line {
+        /* ZƏRFİN ZƏRİF DAXİLİ ÇƏRÇİVƏSİ */
+        .envelope-inner-frame {
             position: absolute;
-            inset: 10px;
-            border: 1px dashed var(--border-gold);
-            border-radius: 6px;
+            inset: 8px;
+            border: 1px solid rgba(197, 160, 89, 0.2);
+            border-radius: 8px;
             pointer-events: none;
             z-index: 2;
         }
 
-        /* ZƏRFİN YUXARI QAPAĞI (FLAP) */
+        /* ZƏRFİN FLAP (YUXARI QAPAQ) HİSSƏSİ */
         .envelope-flap {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            clip-path: polygon(0 0, 50% 55%, 100% 0);
-            background: linear-gradient(180deg, var(--envelope-dark) 0%, var(--envelope-color) 100%);
+            clip-path: polygon(0 0, 50% 52%, 100% 0);
+            background: linear-gradient(180deg, #eaddc5 0%, var(--envelope-color) 100%);
             transform-origin: top;
-            transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 10;
-            border-top: 1px solid var(--border-gold);
+            border-top: 1px solid rgba(197, 160, 89, 0.4);
         }
 
-        /* ZƏRFİN SOL VƏ SAĞ HİSSƏLƏRİ (ORTADAN ARALANAN LENTLƏR VƏ QATLAR) */
+        /* SOL VƏ SAĞ ARALANAN LENT HİSSƏLƏRİ */
         .envelope-side-left {
             position: absolute;
             top: 0;
             left: 0;
             width: 50%;
             height: 100%;
-            background: linear-gradient(90deg, var(--envelope-color) 80%, var(--envelope-dark) 100%);
+            background: linear-gradient(90deg, var(--envelope-color) 70%, var(--envelope-inner) 100%);
             clip-path: polygon(0 0, 100% 50%, 0 100%);
-            transition: transform 0.9s cubic-bezier(0.77, 0, 0.175, 1) 0.4s;
+            transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1) 0.4s;
             z-index: 8;
         }
 
@@ -145,13 +144,12 @@
             right: 0;
             width: 50%;
             height: 100%;
-            background: linear-gradient(-90deg, var(--envelope-color) 80%, var(--envelope-dark) 100%);
+            background: linear-gradient(-90deg, var(--envelope-color) 70%, var(--envelope-inner) 100%);
             clip-path: polygon(100% 0, 0 50%, 100% 100%);
-            transition: transform 0.9s cubic-bezier(0.77, 0, 0.175, 1) 0.4s;
+            transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1) 0.4s;
             z-index: 8;
         }
 
-        /* ZƏRFİN AŞAĞI QAPAĞI */
         .envelope-bottom {
             position: absolute;
             bottom: 0;
@@ -159,76 +157,72 @@
             width: 100%;
             height: 100%;
             background: var(--envelope-color);
-            clip-path: polygon(0 100%, 50% 45%, 100% 100%);
+            clip-path: polygon(0 100%, 50% 48%, 100% 100%);
             z-index: 7;
         }
 
-        /* ŞAM MÖHÜR (WAX SEAL) */
+        /* ZƏRİF ŞAM MÖHÜR (WAX SEAL) */
         .seal-wrapper {
             position: absolute;
-            top: 52%;
+            top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 20;
             cursor: pointer;
             transition: transform 0.4s ease, opacity 0.4s ease;
+            text-align: center;
         }
 
         .seal-btn {
-            width: 80px;
-            height: 80px;
+            width: 75px;
+            height: 75px;
             background: var(--gold-gradient);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 10px 25px rgba(160, 115, 30, 0.4), inset 0 0 10px rgba(255,255,255,0.7);
+            box-shadow: 0 12px 28px rgba(197, 160, 89, 0.35), inset 0 0 8px rgba(255,255,255,0.8);
             border: 2px solid #ffffff;
+            margin: 0 auto;
             transition: transform 0.3s ease;
         }
 
-        .seal-btn:hover { transform: scale(1.08); }
+        .seal-btn:hover { transform: scale(1.06); }
 
         .seal-text {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 600;
-            color: #4a3306;
-            letter-spacing: 1px;
+            color: #3b2805;
+            letter-spacing: 1.5px;
         }
 
         .tap-hint {
-            position: absolute;
-            top: 90px;
-            left: 50%;
-            transform: translateX(-50%);
-            white-space: nowrap;
-            font-size: 10px;
-            color: #6e521c;
-            letter-spacing: 2px;
+            margin-top: 15px;
+            font-size: 9px;
+            color: var(--gold-solid);
+            letter-spacing: 3px;
             text-transform: uppercase;
             font-weight: 500;
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.9);
             padding: 6px 14px;
             border-radius: 20px;
-            border: 1px solid var(--border-gold);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border: 1px solid var(--gold-soft);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            white-space: nowrap;
         }
 
         /* ANİMASİYA MƏRHƏLƏLƏRİ */
-        /* 1-ci addım: Flap Yuxarı Qatlanır */
         #envelope-wrapper.open-flap .envelope-flap {
             transform: rotateX(180deg);
             z-index: 4;
         }
 
-        /* 2-ci addım: Möhür İtİR */
         #envelope-wrapper.open-flap .seal-wrapper {
             opacity: 0;
             pointer-events: none;
         }
 
-        /* 3-cü addım: Zərf Sağ-Sola Ortadan Aralanır */
         #envelope-wrapper.split-envelope .envelope-side-left {
             transform: translateX(-120%);
         }
@@ -241,16 +235,16 @@
         #main-card {
             display: block;
             opacity: 0;
-            transform: translateY(100px) scale(0.9);
+            transform: translateY(80px) scale(0.92);
             width: 100%;
-            max-width: 460px;
+            max-width: 450px;
             background: var(--card-bg);
             padding: 40px 25px;
             margin: 20px auto;
             border-radius: 16px;
-            box-shadow: 0 20px 50px rgba(197, 160, 89, 0.15);
+            box-shadow: 0 25px 55px rgba(197, 160, 89, 0.12);
             text-align: center;
-            border: 1px solid var(--border-gold);
+            border: 1px solid var(--gold-soft);
             transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.2s ease;
             z-index: 10;
             position: relative;
@@ -262,7 +256,7 @@
         }
 
         .card-frame {
-            border: 1px solid var(--border-gold);
+            border: 1px solid var(--gold-soft);
             padding: 25px 15px;
             border-radius: 10px;
         }
@@ -287,8 +281,8 @@
         .names-area {
             margin: 18px 0;
             padding: 12px 0;
-            border-top: 1px solid var(--border-gold);
-            border-bottom: 1px solid var(--border-gold);
+            border-top: 1px solid var(--gold-soft);
+            border-bottom: 1px solid var(--gold-soft);
         }
 
         .names {
@@ -315,14 +309,14 @@
         .countdown { display: flex; justify-content: center; gap: 12px; }
         .time-box {
             background: #fff;
-            width: 58px;
-            height: 58px;
+            width: 56px;
+            height: 56px;
             border-radius: 50%;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            border: 1px solid rgba(197, 160, 89, 0.4);
+            border: 1px solid var(--gold-soft);
             box-shadow: 0 4px 10px rgba(197, 160, 89, 0.08);
         }
         .time-box span { font-size: 14px; font-weight: 500; color: var(--gold-solid); }
@@ -378,7 +372,7 @@
         .rsvp-btn {
             flex: 1;
             padding: 9px;
-            border: 1px solid var(--border-gold);
+            border: 1px solid var(--gold-soft);
             background: #fff;
             color: var(--text-main);
             border-radius: 20px;
@@ -419,10 +413,10 @@
 
     <div id="stars-container"></div>
 
-    <!-- REAL 3D ZƏRF EKRANI -->
+    <!-- LUX 3D ZƏRF EKRANI -->
     <div id="envelope-wrapper">
         <div class="envelope-3d">
-            <div class="envelope-inner-line"></div>
+            <div class="envelope-inner-frame"></div>
             <div class="envelope-flap"></div>
             <div class="envelope-side-left"></div>
             <div class="envelope-side-right"></div>
@@ -437,7 +431,7 @@
         </div>
     </div>
 
-    <!-- ƏSAS KART (ZƏRFİN İÇİNDƏN ÇIXAN DƏVƏTNAMƏ) -->
+    <!-- ƏSAS DƏVƏTNAMƏ KART -->
     <div id="main-card">
         <div class="card-frame">
             <div class="header-date">10 . 10 . 2026</div>
@@ -554,24 +548,20 @@
                 music.play().catch(function(err) { console.log("Musiqi dəstəklənmədi:", err); });
             }
 
-            // 1-ci Mərhələ: Flap (Qapaq) Yuxarı Açılır
             wrapper.classList.add('open-flap');
 
-            // 2-ci Mərhələ: Zərf Sağ-Sola Ortadan Aralanır
             setTimeout(function() {
                 wrapper.classList.add('split-envelope');
-            }, 500);
+            }, 450);
 
-            // 3-cü Mərhələ: Dəvətnamə Kartı Zərfin İçindən Çıxır
             setTimeout(function() {
                 card.classList.add('show-card');
                 createStars();
-            }, 900);
+            }, 850);
 
-            // 4-cü Mərhələ: Zərf Ekranı İtİR
             setTimeout(function() {
                 wrapper.classList.add('fade-out');
-            }, 1400);
+            }, 1300);
         }
 
         function createStars() {
