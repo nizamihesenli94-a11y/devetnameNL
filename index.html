@@ -36,7 +36,7 @@
             position: relative;
         }
 
-        /* ULDUZ VƏ PARILTI ANİMASİYASI */
+        /* ULDUZ ANİMASİYASI */
         #stars-container {
             position: fixed;
             top: 0;
@@ -84,40 +84,39 @@
             visibility: hidden;
         }
 
-        /* REAL ZƏRF QUTUSU */
+        /* BÖYÜDÜLMÜŞ LUX ZƏRF QUTUSU */
         .envelope-3d {
             position: relative;
-            width: 88vw;
-            max-width: 420px;
-            height: 270px;
+            width: 92vw;
+            max-width: 550px; /* Əvvəlki 420px-dən böyüdüldü */
+            height: 360px;    /* Əvvəlki 270px-dən böyüdüldü */
             background: var(--envelope-color);
-            border-radius: 12px;
-            box-shadow: 0 30px 60px rgba(197, 160, 89, 0.12), 0 10px 25px rgba(0,0,0,0.04);
-            border: 1px solid rgba(197, 160, 89, 0.3);
+            border-radius: 14px;
+            box-shadow: 0 35px 70px rgba(197, 160, 89, 0.15), 0 12px 30px rgba(0,0,0,0.05);
+            border: 1px solid rgba(197, 160, 89, 0.35);
             display: flex;
             justify-content: center;
             align-items: center;
             transform-style: preserve-3d;
         }
 
-        /* ZƏRFİN ZƏRİF DAXİLİ ÇƏRÇİVƏSİ */
         .envelope-inner-frame {
             position: absolute;
-            inset: 8px;
-            border: 1px solid rgba(197, 160, 89, 0.2);
-            border-radius: 8px;
+            inset: 12px;
+            border: 1px solid rgba(197, 160, 89, 0.25);
+            border-radius: 10px;
             pointer-events: none;
             z-index: 2;
         }
 
-        /* ZƏRFİN FLAP (YUXARI QAPAQ) HİSSƏSİ */
+        /* ZƏRFİN YUXARI QAPAĞI */
         .envelope-flap {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            clip-path: polygon(0 0, 50% 52%, 100% 0);
+            clip-path: polygon(0 0, 50% 54%, 100% 0);
             background: linear-gradient(180deg, #eaddc5 0%, var(--envelope-color) 100%);
             transform-origin: top;
             transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
@@ -125,7 +124,7 @@
             border-top: 1px solid rgba(197, 160, 89, 0.4);
         }
 
-        /* SOL VƏ SAĞ ARALANAN LENT HİSSƏLƏRİ */
+        /* ORTADAN ARALANAN LENT HİSSƏLƏRİ */
         .envelope-side-left {
             position: absolute;
             top: 0;
@@ -157,14 +156,45 @@
             width: 100%;
             height: 100%;
             background: var(--envelope-color);
-            clip-path: polygon(0 100%, 50% 48%, 100% 100%);
+            clip-path: polygon(0 100%, 50% 50%, 100% 100%);
             z-index: 7;
         }
 
-        /* ZƏRİF ŞAM MÖHÜR (WAX SEAL) */
+        /* KƏPƏNƏK ELEMENDLƏRİ */
+        .butterfly-container {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 15;
+            transition: opacity 0.5s ease;
+        }
+
+        .butterfly {
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23c5a059"><path d="M12 4.5C10.5 2 7 1 4.5 3.5S2 9.5 4.5 11c2.5 1.5 6 1 7.5-1 1.5 2 5 2.5 7.5 1s4.5-5 2-7.5S13.5 2 12 4.5zm-1 9c-2 2.5-5 3.5-7 2.5s-2.5-4.5-1-6.5c1.5-2 4-2 6 0l2 4zm2 0l2-4c2-2 4.5-2 6 0s1 5.5-1 6.5-5 0-7-2.5z"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            filter: drop-shadow(0 4px 8px rgba(197, 160, 89, 0.4));
+            animation: butterflyFlutter 3s ease-in-out infinite alternate;
+        }
+
+        .bf-1 { top: 18%; left: 12%; transform: rotate(-20deg) scale(0.9); animation-delay: 0s; }
+        .bf-2 { top: 22%; right: 14%; transform: rotate(25deg) scale(1.1); animation-delay: 0.6s; }
+        .bf-3 { bottom: 20%; left: 20%; transform: rotate(15deg) scale(0.85); animation-delay: 1.2s; }
+        .bf-4 { bottom: 25%; right: 18%; transform: rotate(-30deg) scale(1); animation-delay: 0.3s; }
+
+        @keyframes butterflyFlutter {
+            0% { transform: scale(1) rotate(0deg) translateY(0); }
+            50% { transform: scale(1.08, 0.92) rotate(5deg) translateY(-4px); }
+            100% { transform: scale(0.95, 1.05) rotate(-5deg) translateY(3px); }
+        }
+
+        /* ŞAM MÖHÜR (WAX SEAL) */
         .seal-wrapper {
             position: absolute;
-            top: 50%;
+            top: 54%;
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 20;
@@ -174,14 +204,14 @@
         }
 
         .seal-btn {
-            width: 75px;
-            height: 75px;
+            width: 85px;
+            height: 85px;
             background: var(--gold-gradient);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 0 12px 28px rgba(197, 160, 89, 0.35), inset 0 0 8px rgba(255,255,255,0.8);
+            box-shadow: 0 14px 32px rgba(197, 160, 89, 0.4), inset 0 0 10px rgba(255,255,255,0.85);
             border: 2px solid #ffffff;
             margin: 0 auto;
             transition: transform 0.3s ease;
@@ -191,24 +221,24 @@
 
         .seal-text {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 22px;
+            font-size: 24px;
             font-weight: 600;
             color: #3b2805;
             letter-spacing: 1.5px;
         }
 
         .tap-hint {
-            margin-top: 15px;
-            font-size: 9px;
+            margin-top: 18px;
+            font-size: 9.5px;
             color: var(--gold-solid);
             letter-spacing: 3px;
             text-transform: uppercase;
             font-weight: 500;
-            background: rgba(255, 255, 255, 0.9);
-            padding: 6px 14px;
+            background: rgba(255, 255, 255, 0.92);
+            padding: 7px 16px;
             border-radius: 20px;
             border: 1px solid var(--gold-soft);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
             white-space: nowrap;
         }
 
@@ -218,7 +248,8 @@
             z-index: 4;
         }
 
-        #envelope-wrapper.open-flap .seal-wrapper {
+        #envelope-wrapper.open-flap .seal-wrapper,
+        #envelope-wrapper.open-flap .butterfly-container {
             opacity: 0;
             pointer-events: none;
         }
@@ -237,7 +268,7 @@
             opacity: 0;
             transform: translateY(80px) scale(0.92);
             width: 100%;
-            max-width: 450px;
+            max-width: 460px;
             background: var(--card-bg);
             padding: 40px 25px;
             margin: 20px auto;
@@ -413,7 +444,7 @@
 
     <div id="stars-container"></div>
 
-    <!-- LUX 3D ZƏRF EKRANI -->
+    <!-- LUX 3D BÖYÜK ZƏRF EKRANI -->
     <div id="envelope-wrapper">
         <div class="envelope-3d">
             <div class="envelope-inner-frame"></div>
@@ -421,6 +452,14 @@
             <div class="envelope-side-left"></div>
             <div class="envelope-side-right"></div>
             <div class="envelope-bottom"></div>
+
+            <!-- KƏPƏNƏKLƏR -->
+            <div class="butterfly-container">
+                <div class="butterfly bf-1"></div>
+                <div class="butterfly bf-2"></div>
+                <div class="butterfly bf-3"></div>
+                <div class="butterfly bf-4"></div>
+            </div>
 
             <div class="seal-wrapper" onclick="startUnfoldSequence()">
                 <div class="seal-btn">
