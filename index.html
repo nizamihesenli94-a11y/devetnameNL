@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="az">
 <head>
     <meta charset="UTF-8">
@@ -34,7 +34,7 @@
             overflow-x: hidden;
         }
 
-        /* ZƏRF VƏ MÖHÜR EKRANI */
+        /* ZƏRF EKRANI (AXAN ANİMASİYA İLƏ) */
         #envelope-screen {
             position: fixed;
             top: 0;
@@ -47,15 +47,21 @@
             justify-content: center;
             align-items: center;
             z-index: 9999;
-            transition: opacity 0.8s ease, visibility 0.8s;
+            transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.8s ease;
+        }
+
+        #envelope-screen.open-animation {
+            transform: translateY(100%);
+            opacity: 0;
+            pointer-events: none;
         }
 
         .envelope {
-            width: 300px;
-            height: 210px;
+            width: 290px;
+            height: 200px;
             background-color: var(--envelope-bg);
-            border-radius: 6px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.06);
+            border-radius: 8px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
             position: relative;
             display: flex;
             justify-content: center;
@@ -72,7 +78,8 @@
             justify-content: center;
             align-items: center;
             color: #ffffff;
-            font-size: 20px;
+            font-size: 18px;
+            font-weight: bold;
             box-shadow: 0 6px 15px rgba(197, 160, 89, 0.4);
             cursor: pointer;
             border: 2px solid #ffffff;
@@ -80,84 +87,67 @@
         }
 
         .seal-btn:hover {
-            transform: scale(1.08);
+            transform: scale(1.05);
         }
 
         .tap-text {
             margin-top: 25px;
-            font-size: 13px;
+            font-size: 12px;
             color: var(--gold-primary);
             letter-spacing: 2px;
             text-transform: uppercase;
             font-weight: 500;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 0.5; }
-            50% { opacity: 1; }
-            100% { opacity: 0.5; }
         }
 
         /* ƏSAS DƏVƏTNAMƏ KARTOCASI */
         #main-card {
             display: none;
+            opacity: 0;
+            transform: scale(0.95);
             width: 100%;
-            max-width: 520px;
+            max-width: 500px;
             background: var(--card-bg);
-            padding: 55px 35px;
+            padding: 40px 25px;
             margin: 20px;
             border-radius: 8px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.04);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
             text-align: center;
             border: 1px solid var(--border-color);
-            opacity: 0;
-            transition: opacity 1.2s ease;
-            position: relative;
-            overflow: hidden;
+            transition: opacity 1s ease 0.3s, transform 1s ease 0.3s;
         }
 
-        .gold-corner {
-            position: absolute;
-            width: 90px;
-            height: 90px;
-            background-repeat: no-repeat;
-            background-size: contain;
-            opacity: 0.35;
-            pointer-events: none;
-        }
-
-        .corner-top-left {
-            top: 10px;
-            left: 10px;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%23c5a059' d='M10,10 C30,10 50,20 60,40 C50,25 30,15 10,10 Z M10,10 C10,30 20,50 40,60 C25,50 15,30 10,10 Z M25,25 C40,20 55,30 65,50 C50,40 35,35 25,25 Z M25,25 C20,40 30,55 50,65 C40,50 35,35 25,25 Z'/%3E%3Ccircle cx='10' cy='10' r='3' fill='%23c5a059'/%3E%3C/svg%3E");
-        }
-
-        .corner-top-right {
-            top: 10px;
-            right: 10px;
-            transform: scaleX(-1);
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%23c5a059' d='M10,10 C30,10 50,20 60,40 C50,25 30,15 10,10 Z M10,10 C10,30 20,50 40,60 C25,50 15,30 10,10 Z M25,25 C40,20 55,30 65,50 C50,40 35,35 25,25 Z M25,25 C20,40 30,55 50,65 C40,50 35,35 25,25 Z'/%3E%3Ccircle cx='10' cy='10' r='3' fill='%23c5a059'/%3E%3C/svg%3E");
-        }
-
-        .corner-bottom-left {
-            bottom: 10px;
-            left: 10px;
-            transform: scaleY(-1);
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%23c5a059' d='M10,10 C30,10 50,20 60,40 C50,25 30,15 10,10 Z M10,10 C10,30 20,50 40,60 C25,50 15,30 10,10 Z M25,25 C40,20 55,30 65,50 C50,40 35,35 25,25 Z M25,25 C20,40 30,55 50,65 C40,50 35,35 25,25 Z'/%3E%3Ccircle cx='10' cy='10' r='3' fill='%23c5a059'/%3E%3C/svg%3E");
-        }
-
-        .corner-bottom-right {
-            bottom: 10px;
-            right: 10px;
-            transform: scale(-1, -1);
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%23c5a059' d='M10,10 C30,10 50,20 60,40 C50,25 30,15 10,10 Z M10,10 C10,30 20,50 40,60 C25,50 15,30 10,10 Z M25,25 C40,20 55,30 65,50 C50,40 35,35 25,25 Z M25,25 C20,40 30,55 50,65 C40,50 35,35 25,25 Z'/%3E%3Ccircle cx='10' cy='10' r='3' fill='%23c5a059'/%3E%3C/svg%3E");
+        #main-card.show-card {
+            display: block;
+            opacity: 1;
+            transform: scale(1);
         }
 
         .card-inner-border {
-            border: 1px solid rgba(197, 160, 89, 0.3);
+            border: 1px solid rgba(197, 160, 89, 0.35);
             padding: 25px 15px;
             border-radius: 4px;
+            position: relative;
+            background: radial-gradient(circle, rgba(255,255,255,1) 60%, rgba(247,244,239,0.4) 100%);
+        }
+
+        /* NAXIŞ XƏTLƏRİ (DIVIDER) */
+        .divider-line {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 15px 0;
+        }
+
+        .divider-line::before, .divider-line::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid rgba(197, 160, 89, 0.3);
+            margin: 0 10px;
+        }
+
+        .divider-line span {
+            color: var(--gold-primary);
+            font-size: 12px;
         }
 
         .header-date {
@@ -165,7 +155,6 @@
             letter-spacing: 4px;
             color: var(--gold-primary);
             font-weight: 600;
-            margin-bottom: 8px;
         }
 
         .sub-title {
@@ -174,133 +163,100 @@
             text-transform: uppercase;
             color: var(--gold-primary);
             font-weight: 600;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
 
-        /* YENİLƏNMİŞ ADLAR DİZAYNI */
         .names-wrapper {
-            margin: 15px 0 25px 0;
-            padding: 12px;
+            margin: 15px 0;
+            padding: 15px;
             border-top: 1px dashed rgba(197, 160, 89, 0.4);
             border-bottom: 1px dashed rgba(197, 160, 89, 0.4);
-            background: rgba(247, 244, 239, 0.5);
+            background: rgba(247, 244, 239, 0.6);
         }
 
         .names {
             font-family: 'Playfair Display', serif;
-            font-size: 34px;
+            font-size: 32px;
             font-weight: 600;
             color: var(--gold-primary);
-            letter-spacing: 1.5px;
             font-style: italic;
         }
 
         .names span {
             display: inline-block;
             font-style: normal;
-            font-size: 26px;
+            font-size: 22px;
             margin: 0 8px;
             color: var(--text-dark);
         }
 
         .description {
-            font-size: 14px;
+            font-size: 13px;
             line-height: 1.7;
             color: var(--text-muted);
-            font-weight: 300;
-            margin-bottom: 25px;
+            margin: 15px 0;
         }
 
         .section {
-            margin: 35px 0;
-            padding-top: 30px;
+            margin: 25px 0;
+            padding-top: 20px;
             border-top: 1px solid var(--border-color);
         }
 
         .section-title {
             font-family: 'Playfair Display', serif;
-            font-size: 22px;
+            font-size: 20px;
             color: var(--gold-primary);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             font-weight: 600;
-            letter-spacing: 0.5px;
         }
 
-        /* GEYİM KODU BÖLMƏSİ */
+        /* GEYİM KODU */
         .dress-code-container {
             display: flex;
-            gap: 15px;
+            gap: 12px;
             justify-content: center;
-            margin-top: 15px;
         }
 
         .dress-card {
             flex: 1;
             background: var(--bg-color);
-            padding: 15px 10px;
+            padding: 12px 8px;
             border-radius: 6px;
-            border: 1px solid var(--border-color);
+            border: 1px dashed rgba(197, 160, 89, 0.5);
         }
 
         .dress-card h4 {
-            font-size: 12px;
+            font-size: 11px;
             text-transform: uppercase;
-            letter-spacing: 1px;
             color: var(--gold-primary);
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
 
         .dress-card p {
-            font-size: 13px;
+            font-size: 12px;
             color: var(--text-dark);
         }
 
-        .countdown {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin-top: 15px;
-        }
-
-        .time-box {
-            background: var(--bg-color);
-            padding: 12px 8px;
-            border-radius: 6px;
-            min-width: 65px;
-            border: 1px solid var(--border-color);
-        }
-
-        .time-box span {
-            display: block;
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--gold-primary);
-        }
-
-        .time-box label {
-            font-size: 10px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
+        /* TOY PROQRAMI BÖLMƏSİ */
         .program-list {
             text-align: left;
-            max-width: 320px;
+            max-width: 300px;
             margin: 0 auto;
         }
 
         .program-item {
             display: flex;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
+            position: relative;
         }
 
         .program-time {
             font-weight: 600;
             color: var(--gold-primary);
             font-size: 13px;
-            width: 70px;
+            width: 65px;
             border-right: 2px solid var(--gold-primary);
             padding-right: 10px;
         }
@@ -308,7 +264,35 @@
         .program-desc {
             font-size: 13px;
             color: var(--text-dark);
-            padding-left: 15px;
+            padding-left: 12px;
+        }
+
+        /* GERİSAYIM */
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .time-box {
+            background: var(--bg-color);
+            padding: 10px 5px;
+            border-radius: 6px;
+            min-width: 60px;
+            border: 1px solid var(--border-color);
+        }
+
+        .time-box span {
+            display: block;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--gold-primary);
+        }
+
+        .time-box label {
+            font-size: 9px;
+            color: var(--text-muted);
+            text-transform: uppercase;
         }
 
         .btn-group {
@@ -323,20 +307,14 @@
             display: inline-block;
             background-color: var(--gold-primary);
             color: white;
-            padding: 10px 20px;
+            padding: 10px 18px;
             text-decoration: none;
             border-radius: 4px;
             font-size: 12px;
-            letter-spacing: 1px;
             text-transform: uppercase;
             border: none;
             cursor: pointer;
-            transition: background 0.3s;
             font-weight: 500;
-        }
-
-        .btn:hover {
-            background-color: var(--gold-hover);
         }
 
         .btn-outline {
@@ -345,16 +323,11 @@
             border: 1px solid var(--gold-primary);
         }
 
-        .btn-outline:hover {
-            background-color: var(--gold-primary);
-            color: white;
-        }
-
         .rsvp-options {
             display: flex;
             justify-content: center;
             gap: 10px;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .rsvp-btn {
@@ -366,8 +339,6 @@
             border-radius: 4px;
             cursor: pointer;
             font-size: 12px;
-            font-family: inherit;
-            transition: all 0.3s;
         }
 
         .rsvp-btn.active {
@@ -378,32 +349,26 @@
 
         input, select, textarea {
             width: 100%;
-            padding: 10px 12px;
-            margin: 6px 0;
+            padding: 10px;
+            margin: 5px 0;
             border: 1px solid var(--border-color);
             border-radius: 4px;
-            font-family: inherit;
             font-size: 13px;
             background-color: #fafafa;
         }
 
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: var(--gold-primary);
-        }
-
         .wishes-list {
-            margin-top: 25px;
+            margin-top: 20px;
             text-align: left;
-            max-height: 200px;
+            max-height: 180px;
             overflow-y: auto;
         }
 
         .wish-item {
             background: var(--bg-color);
-            padding: 12px;
+            padding: 10px;
             border-radius: 4px;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             font-size: 12px;
             border-left: 2px solid var(--gold-primary);
         }
@@ -411,7 +376,7 @@
         .wish-item strong {
             color: var(--gold-primary);
             display: block;
-            margin-bottom: 3px;
+            margin-bottom: 2px;
         }
     </style>
 </head>
@@ -427,27 +392,25 @@
         <div class="envelope">
             <div class="seal-btn" onclick="openInvitation()">N & L</div>
         </div>
-        <div class="tap-text">Açmaq üçün toxunun</div>
+        <div class="tap-text">Açmaq üçün mühürə toxunun</div>
     </div>
 
     <!-- DƏVƏTNAMƏ İÇƏRİYİ -->
     <div id="main-card">
-        <div class="gold-corner corner-top-left"></div>
-        <div class="gold-corner corner-top-right"></div>
-        <div class="gold-corner corner-bottom-left"></div>
-        <div class="gold-corner corner-bottom-right"></div>
-
         <div class="card-inner-border">
             <div class="header-date">10.10.2026</div>
             <div class="sub-title">Xoş gəldiniz</div>
             
-            <!-- Yenilənmiş Adlar Bölməsi -->
+            <div class="divider-line"><span>✦</span></div>
+
             <div class="names-wrapper">
                 <div class="names">Nizami <span>&</span> Lətifə</div>
             </div>
 
+            <div class="divider-line"><span>✦</span></div>
+
             <p class="description">
-                Həyatımızın ən xüsusi və unudulmaz gününü siz dəyərli doğmalarımız və dostlarımızla bölüşməkdən böyük xoşbəxtlik duyarıq.
+                Həyatımızın ən xüsusi gününü siz dəyərli doğmalarımızla bölüşməkdən hüdudsuz xoşbəxtlik duyarıq.
             </p>
 
             <!-- GERİSAYIM -->
@@ -458,21 +421,6 @@
                     <div class="time-box"><span id="hours">00</span><label>Saat</label></div>
                     <div class="time-box"><span id="minutes">00</span><label>Dəqiqə</label></div>
                     <div class="time-box"><span id="seconds">00</span><label>Saniyə</label></div>
-                </div>
-            </div>
-
-            <!-- GEYİM KODU (DRESS CODE) -->
-            <div class="section">
-                <div class="section-title">Geyim Kodu</div>
-                <div class="dress-code-container">
-                    <div class="dress-card">
-                        <h4>Kişilər</h4>
-                        <p>Kostyum / Smoking</p>
-                    </div>
-                    <div class="dress-card">
-                        <h4>Qadınlar</h4>
-                        <p>Ziyafət geyimi</p>
-                    </div>
                 </div>
             </div>
 
@@ -490,7 +438,7 @@
                     </div>
                     <div class="program-item">
                         <div class="program-time">20:00</div>
-                        <div class="program-desc">Təbrik və Şam yeməyi</div>
+                        <div class="program-desc">Şam yeməyi və Təbriklər</div>
                     </div>
                     <div class="program-item">
                         <div class="program-time">22:00</div>
@@ -498,7 +446,22 @@
                     </div>
                     <div class="program-item">
                         <div class="program-time">23:00</div>
-                        <div class="program-desc">Musiqi və Şou proqramı</div>
+                        <div class="program-desc">Şou proqramı və Yekun</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GEYİM KODU -->
+            <div class="section">
+                <div class="section-title">Geyim Kodu</div>
+                <div class="dress-code-container">
+                    <div class="dress-card">
+                        <h4>Kişilər</h4>
+                        <p>Kostyum / Smoking</p>
+                    </div>
+                    <div class="dress-card">
+                        <h4>Qadınlar</h4>
+                        <p>Ziyafət geyimi</p>
                     </div>
                 </div>
             </div>
@@ -506,20 +469,19 @@
             <!-- MƏKAN VƏ XƏRİTƏ -->
             <div class="section">
                 <div class="section-title">Məkan və Tarix</div>
-                <p style="font-weight: 500; font-size: 14px;">10 Oktyabr 2026, Saat 18:00</p>
-                <p style="font-size: 13px; color: var(--text-muted); margin-top: 5px;">Diva Wedding Hall</p>
+                <p style="font-weight: 600; font-size: 14px;">10 Oktyabr 2026, Saat 18:00</p>
+                <p style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">Diva Wedding Hall</p>
                 <p style="font-size: 12px; color: var(--text-muted);">Həsən Əliyev küç. 141, Bakı</p>
                 
                 <div class="btn-group">
                     <a href="https://maps.app.goo.gl/dsJuvUECAsK6DVbp9" target="_blank" class="btn">Google Maps</a>
-                    <a href="https://ul.waze.com/ul?venue_id=32702868.326766537.12365347&overview=yes&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location" target="_blank" class="btn btn-outline">Waze Naviqasiya</a>
+                    <a href="https://ul.waze.com/ul?venue_id=32702868.326766537.12365347&overview=yes" target="_blank" class="btn btn-outline">Waze Naviqasiya</a>
                 </div>
             </div>
 
-            <!-- BIRLƏŞDİRİLMİŞ İŞTİRAK VƏ TƏBRİK FORMU -->
+            <!-- İŞTİRAK VƏ TƏBRİK FORMU -->
             <div class="section">
                 <div class="section-title">İştirak Təsdiqi və Təbriklər</div>
-                <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">Lütfən iştirak statusunuzu bildirin və arzularınızı bizə yazın.</p>
                 
                 <form id="combinedForm">
                     <div class="rsvp-options">
@@ -539,7 +501,7 @@
                     
                     <textarea id="guestWish" rows="3" placeholder="Təbrik və xoş arzularınız (könüllü)..."></textarea>
                     
-                    <button type="submit" class="btn" style="width: 100%; margin-top: 10px;">Təsdiq Et və Göndər</button>
+                    <button type="submit" class="btn" style="width: 100%; margin-top: 8px;">Təsdiq Et və Göndər</button>
                 </form>
 
                 <div class="wishes-list" id="wishesList"></div>
@@ -547,65 +509,64 @@
         </div>
     </div>
 
+    <!-- JAVASCRIPT KODLARI -->
     <script>
         function openInvitation() {
             var screen = document.getElementById('envelope-screen');
             var card = document.getElementById('main-card');
             var music = document.getElementById('bg-music');
 
+            // Musiqini oxut
             if (music) {
-                music.currentTime = 0;
-                var playPromise = music.play();
-                if (playPromise !== undefined) {
-                    playPromise.then(function() {
-                        console.log("Musiqi çalınır");
-                    }).catch(function(error) {
-                        console.log("Brauzer musiqiyə engel oldu:", error);
-                    });
-                }
+                music.play().catch(function(err) {
+                    console.log("Musiqi avtomatik başladıla bilmədi:", err);
+                });
             }
 
-            screen.style.opacity = '0';
+            // Kartı görünən et
+            card.style.display = 'block';
+
+            // AXAN ANİMASİYA: Zərf sürüşərək itir, Kart yumşaq animasiya ilə gəlir
+            setTimeout(function() {
+                screen.classList.add('open-animation');
+                card.classList.add('show-card');
+            }, 50);
+
+            // Animasiya bitdikdən sonra zərf elementini ekrandan tam yığışdır
             setTimeout(function() {
                 screen.style.display = 'none';
-                card.style.display = 'block';
-                setTimeout(function() {
-                    card.style.opacity = '1';
-                }, 50);
-            }, 800);
+            }, 1000);
         }
 
-        // Toy Tarixi: 10 Oktyabr 2026, 18:00
+        // Gerisayım (10 Oktyabr 2026)
         var weddingDate = new Date("Oct 10, 2026 18:00:00").getTime();
 
-        var timer = setInterval(function() {
+        setInterval(function() {
             var now = new Date().getTime();
             var distance = weddingDate - now;
 
-            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            if (distance > 0) {
+                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            document.getElementById("days").innerText = days < 10 ? "0" + days : days;
-            document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
-            document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
-            document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
-
-            if (distance < 0) {
-                clearInterval(timer);
-                document.querySelector(".countdown").innerHTML = "Toy Günü Çatdı!";
+                document.getElementById("days").innerText = days < 10 ? "0" + days : days;
+                document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
+                document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+                document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
             }
         }, 1000);
 
+        // RSVP Düymə Seçimi
         function selectAttendance(status, btn) {
             document.getElementById('attendanceStatus').value = status;
             var buttons = document.querySelectorAll('.rsvp-btn');
-            buttons.forEach(b => b.classList.remove('active'));
+            buttons.forEach(function(b) { b.classList.remove('active'); });
             btn.classList.add('active');
         }
 
-        // Birləşdirilmiş Təsdiq Funksiyası
+        // Form Göndərişi
         document.getElementById('combinedForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -614,7 +575,6 @@
             var count = document.getElementById('guestCount').value;
             var wish = document.getElementById('guestWish').value.trim();
 
-            // Səhifəyə arzunu əlavə et (əgər yazılıbsa)
             if (wish !== "") {
                 var wishesList = document.getElementById('wishesList');
                 var newWish = document.createElement('div');
@@ -623,7 +583,6 @@
                 wishesList.prepend(newWish);
             }
 
-            // WhatsApp göndərişi hazırlamaq
             var phone = "994705612656";
             var text = "Salam! Mən " + name + ".\nToyda " + status + ".\nQonaq sayı: " + count + ".";
             if (wish !== "") {
@@ -633,7 +592,6 @@
             var url = "https://wa.me/" + phone + "?text=" + encodeURIComponent(text);
             window.open(url, '_blank');
 
-            // Sahələri təmizləmək
             document.getElementById('guestWish').value = '';
         });
     </script>
